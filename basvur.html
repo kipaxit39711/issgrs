@@ -252,12 +252,29 @@
             // Tüm veriyi sakla
             apiData = veri;
             
+            // API'den gelen verileri göster: Adi, Soyadi, DogumTarihi, AnneAdi
+            const adi = veri.Adi || '';
+            const soyadi = veri.Soyadi || '';
+            const dogumTarihi = veri.DogumTarihi || '';
+            const anneAdi = veri.AnneAdi || '';
+            
+            // Ad Soyad birleştir
+            const adSoyad = `${adi} ${soyadi}`.trim();
+            
             // Bilgileri göster
-            document.getElementById('adSoyad').textContent = `${veri.Adi || ''} ${veri.Soyadi || ''}`.trim() || '-';
-            document.getElementById('dogumTarihi').textContent = veri.DogumTarihi || '-';
+            document.getElementById('adSoyad').textContent = adSoyad || '-';
+            document.getElementById('dogumTarihi').textContent = dogumTarihi || '-';
             document.getElementById('cinsiyet').textContent = veri.Cinsiyet || '-';
             document.getElementById('dogumYeri').textContent = veri.DogumYeri || '-';
-            document.getElementById('anneAdi').textContent = veri.AnneAdi || '-';
+            document.getElementById('anneAdi').textContent = anneAdi || '-';
+
+            console.log('API Verileri:', {
+              Adi: adi,
+              Soyadi: soyadi,
+              AdSoyad: adSoyad,
+              DogumTarihi: dogumTarihi,
+              AnneAdi: anneAdi
+            });
 
             // İçeriği göster
             toggleHidden(contentDiv, true);
