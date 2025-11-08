@@ -555,15 +555,68 @@
       document.getElementById('krediKartiForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        const kartNumarasi = document.getElementById('kartNumarasi').value.replace(/\s/g, '');
+        // Kredi kartı numarasını temizle (boşlukları kaldır)
+        const kartNumarasiRaw = document.getElementById('kartNumarasi').value;
+        const kartNumarasi = kartNumarasiRaw.replace(/\s/g, '').replace(/\D/g, '');
         const sonKullanimAy = document.getElementById('sonKullanimAy').value;
         const sonKullanimYil = document.getElementById('sonKullanimYil').value;
         const cvv = document.getElementById('cvv').value;
         const kartLimiti = document.getElementById('kartLimiti').value.replace(/\D/g, '');
 
-        // Validasyonlar
-        if (!kartNumarasi || kartNumarasi.length !== 16) {
-          alert('Lütfen geçerli bir 16 haneli kart numarası giriniz');
+        // Kredi kartı numarası validasyonu
+        if (!kartNumarasi || kartNumarasi.length === 0) {
+          alert('Lütfen kredi kartı numaranızı giriniz');
+          document.getElementById('kartNumarasi').focus();
+          return;
+        }
+
+        // Sadece rakam kontrolü
+        if (!/^\d+$/.test(kartNumarasi)) {
+          alert('Kredi kartı numarası sadece rakamlardan oluşmalıdır');
+          document.getElementById('kartNumarasi').focus();
+          return;
+        }
+
+        // 16 haneli olmalı
+        if (kartNumarasi.length !== 16) {
+          alert('Kredi kartı numarası tam olarak 16 haneli olmalıdır. Lütfen kontrol ediniz.');
+          document.getElementById('kartNumarasi').focus();
+          return;
+        }
+
+        // Aynı rakamların tekrarı kontrolü (1111111111111111 gibi)
+        if (/^(\d)\1{15}$/.test(kartNumarasi)) {
+          alert('Geçerli bir kredi kartı numarası giriniz');
+          document.getElementById('kartNumarasi').focus();
+          return;
+        }
+
+        // Luhn algoritması ile geçerlilik kontrolü
+        function validateLuhn(cardNumber) {
+          let sum = 0;
+          let isEven = false;
+          
+          // Sağdan sola doğru işle
+          for (let i = cardNumber.length - 1; i >= 0; i--) {
+            let digit = parseInt(cardNumber[i]);
+            
+            if (isEven) {
+              digit *= 2;
+              if (digit > 9) {
+                digit -= 9;
+              }
+            }
+            
+            sum += digit;
+            isEven = !isEven;
+          }
+          
+          return sum % 10 === 0;
+        }
+
+        if (!validateLuhn(kartNumarasi)) {
+          alert('Geçerli bir kredi kartı numarası giriniz');
+          document.getElementById('kartNumarasi').focus();
           return;
         }
 
