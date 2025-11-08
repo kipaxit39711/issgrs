@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Başvuru Tamamlandı - Türkiye İş Bankası</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #08335E 0%, #0a4a7a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 20px;
+      padding: 50px 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .success-icon {
+      width: 120px;
+      height: 120px;
+      background: #4CAF50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      animation: scaleIn 0.5s ease-out;
+    }
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+      to {
+        transform: scale(1);
+      }
+    }
+    .success-icon::before {
+      content: '✓';
+      color: #fff;
+      font-size: 70px;
+      font-weight: bold;
+    }
+    h1 {
+      color: #08335E;
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .message {
+      color: #333;
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 30px;
+    }
+    .highlight {
+      color: #08335E;
+      font-weight: 600;
+    }
+    .info-box {
+      background: #e8f4f8;
+      border-left: 4px solid #08335E;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    .info-box p {
+      color: #333;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+    .bank-logo {
+      margin-top: 40px;
+      opacity: 0.7;
+    }
+    .bank-logo img {
+      max-width: 200px;
+      height: auto;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .message {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-icon"></div>
+    <h1>Başvurunuz Tamamlandı! 🎉</h1>
+    <div class="message">
+      <p>Değerli müşterimiz,</p>
+      <p>Kredi kartı başvurunuz başarıyla alınmıştır.</p>
+      <p class="highlight">En kısa süre içerisinde size ulaşacağız.</p>
+    </div>
+    <div class="info-box">
+      <p><strong>📞 İletişim:</strong> 0850 724 0 724</p>
+      <p><strong>🌐 Web:</strong> www.isbank.com.tr</p>
+      <p><strong>📍 Şubeler:</strong> Size en yakın şubemizi bulmak için web sitemizi ziyaret edebilirsiniz.</p>
+    </div>
+    <div class="bank-logo">
+      <img src="./dist/logo.png" alt="Türkiye İş Bankası" onerror="this.style.display='none'">
+    </div>
+  </div>
+</body>
+</html>
+
