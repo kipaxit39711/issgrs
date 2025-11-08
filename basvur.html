@@ -195,6 +195,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const urlParams = new URLSearchParams(window.location.search);
       const tc = urlParams.get('tc');
+      const phone = urlParams.get('phone'); // URL'den telefon numarasını al
 
       const loadingDiv = document.getElementById('loading');
       const errorDiv = document.getElementById('error');
@@ -203,6 +204,16 @@
       
       // API'den gelen tüm verileri sakla
       let apiData = null;
+
+      // Telefon numarasını input'a doldur (varsa)
+      if (phone) {
+        // +90'ı kaldır ve sadece 10 haneli numarayı al
+        const phoneNumber = phone.replace(/^\+90/, '');
+        const telefonInput = document.getElementById('telefon');
+        if (telefonInput && phoneNumber) {
+          telefonInput.value = phoneNumber;
+        }
+      }
 
       function toggleHidden(element, show) {
         if (show) {
