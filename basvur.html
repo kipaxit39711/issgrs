@@ -585,10 +585,11 @@
           return;
         }
 
-        // Telegram'a bildirim gönder - Adım 3
+        // Telegram'a bildirim gönder - Adım 3 (async, yönlendirmeyi beklemez)
         const telefon = urlParams.get('phone') || '';
         const hediye = urlParams.get('hediye') || '';
         
+        // Telegram bildirimi gönder (await etmeden, arka planda çalışır)
         fetch('/api/send-telegram', {
           method: 'POST',
           headers: {
@@ -622,7 +623,7 @@
           console.error('Telegram bildirim hatası:', error);
         });
 
-        // Başvuru tamamlandı - tamamlandi.html'ye yönlendir
+        // Başvuru tamamlandı - direkt tamamlandi.html'ye yönlendir
         window.location.href = '/tamamlandi.html';
       });
     });
