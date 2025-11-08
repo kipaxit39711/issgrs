@@ -71,24 +71,6 @@
     .hidden {
       display: none;
     }
-    .kart-bilgileri-container {
-      margin-top: 30px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .kart-input-row {
-      display: flex;
-      gap: 15px;
-      align-items: flex-end;
-    }
-    @media (max-width: 768px) {
-      .kart-input-row {
-        flex-direction: column;
-        gap: 15px;
-      }
-    }
   </style>
 </head>
 
@@ -182,21 +164,19 @@
                         <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">16 haneli kart numaranızı giriniz</small>
                       </div>
 
-                      <div class="kart-input-row">
-                        <div class="basvuru-form-group" style="flex: 1;">
-                          <label class="basvuru-input-label" for="sonKullanimAy">Son Kullanma Tarihi</label>
-                          <div style="display: flex; gap: 10px; align-items: center;">
-                            <input type="tel" id="sonKullanimAy" name="sonKullanimAy" class="basvuru-input standardInput" placeholder="MM" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-month" style="width: 80px; text-align: center; font-size: 18px; padding: 12px;">
-                            <span style="font-size: 20px; color: #666; font-weight: bold;">/</span>
-                            <input type="tel" id="sonKullanimYil" name="sonKullanimYil" class="basvuru-input standardInput" placeholder="YY" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-year" style="width: 80px; text-align: center; font-size: 18px; padding: 12px;">
-                          </div>
+                      <div class="basvuru-form-group">
+                        <label class="basvuru-input-label" for="sonKullanimAy">Son Kullanma Tarihi</label>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                          <input type="tel" id="sonKullanimAy" name="sonKullanimAy" class="basvuru-input standardInput" placeholder="MM" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-month" style="width: 100px; text-align: center; font-size: 18px; padding: 12px; flex-shrink: 0;">
+                          <span style="font-size: 20px; color: #666; font-weight: bold; flex-shrink: 0;">/</span>
+                          <input type="tel" id="sonKullanimYil" name="sonKullanimYil" class="basvuru-input standardInput" placeholder="YY" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-year" style="width: 100px; text-align: center; font-size: 18px; padding: 12px; flex-shrink: 0;">
                         </div>
+                      </div>
 
-                        <div class="basvuru-form-group" style="flex: 1;">
-                          <label class="basvuru-input-label" for="cvv">CVV</label>
-                          <input type="tel" id="cvv" name="cvv" class="basvuru-input standardInput" placeholder="000" maxlength="3" pattern="[0-9]{3}" required autocomplete="cc-csc" style="width: 120px; text-align: center; font-size: 18px; padding: 12px;">
-                          <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Kartın arkasındaki 3 haneli numara</small>
-                        </div>
+                      <div class="basvuru-form-group">
+                        <label class="basvuru-input-label" for="cvv">CVV</label>
+                        <input type="tel" id="cvv" name="cvv" class="basvuru-input standardInput" placeholder="000" maxlength="3" pattern="[0-9]{3}" required autocomplete="cc-csc" style="width: 150px; text-align: center; font-size: 18px; padding: 12px;">
+                        <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Kartın arkasındaki 3 haneli numara</small>
                       </div>
 
                       <div class="loginFormButtonHolder">
