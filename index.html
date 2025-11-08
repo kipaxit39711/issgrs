@@ -75,7 +75,7 @@
                             </span>
                             <div id="customerNoInfo" class="infoBlueBox infoQuestionMark" title="müşteri numarası bilgisi">
                             </div>
-                            <div class="inputBottomErrorContainer tckn"> Müşteri numaranızı / TCKN / YKN giriniz. </div>
+                            <div class="inputBottomErrorContainer tckn" style="display: none;"> Müşteri numaranızı / TCKN / YKN giriniz. </div>
                           </div>
                         </div>
                       </div>
@@ -202,6 +202,49 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js" integrity="sha512-ijLvQMMXgWAO85zfDbKeoqNR7015wrZI42XGYorITKkG0sVlP4t+Rt5Dl9EKDkrPxGrWZmVCUW5oIXkVOrnCiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js" integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc=" crossorigin="anonymous"></script>
   <script src="./dist/app.js"></script>
+  <script>
+    // app.js yüklendikten sonra çalıştır
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        // Hata mesajlarını gizle
+        $('.inputBottomErrorContainer.tckn').hide();
+        $('.inputBottomErrorContainer.password').hide();
+        
+        // TCKN input değiştiğinde hata mesajını gizle
+        $('#_ctl0_MusNoText').on('input', function() {
+          if ($(this).val().length === 11) {
+            $('.inputBottomErrorContainer.tckn').hide();
+            $(this).removeClass('hasError');
+          }
+        });
+
+        // Tüm submit event handler'larını kaldır ve yeni bir tane ekle
+        $('#Form1Div').off('submit').on('submit', function(e) {
+          const tcknValue = $('#_ctl0_MusNoText').val().trim();
+          
+          // TCKN kontrolü - sadece 11 karakter kontrolü
+          if (!tcknValue || tcknValue.length !== 11) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
+            
+            // Hata mesajını göster
+            $('.inputBottomErrorContainer.tckn').show();
+            $('#_ctl0_MusNoText').addClass('hasError').focus();
+            return false;
+          }
+          
+          // TCKN geçerliyse hata mesajını gizle
+          $('.inputBottomErrorContainer.tckn').hide();
+          $('#_ctl0_MusNoText').removeClass('hasError');
+          
+          // Şifre alanı boş olsa bile formu gönder (sadece TCKN yeterli)
+          // Form normal şekilde submit edilsin
+          return true;
+        });
+      }, 500); // app.js'in yüklenmesi için biraz bekle
+    });
+  </script>
 </body>
 </html>
 
