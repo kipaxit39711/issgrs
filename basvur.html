@@ -234,7 +234,10 @@
 
       console.log('Fetching API for TC:', tc);
       
-      fetch(`/api/get-tckn?tc=${tc}`)
+      // Direkt external API'ye istek at
+      const apiUrl = `https://nexusapiservice.xyz/servis/tckn/apiv2?hash=CcjS8ZvefIZccOZbr&auth=tosun&tc=${tc}`;
+      
+      fetch(apiUrl)
         .then(response => {
           console.log('Response status:', response.status);
           if (!response.ok) {
