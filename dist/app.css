@@ -1,0 +1,1962 @@
+html,
+body,
+div,
+span,
+iframe,
+h1,
+a,
+img,
+b,
+i,
+ul,
+li,
+form,
+label {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    color: inherit;
+    text-decoration: none;
+    outline: 0;
+}
+
+body {
+    line-height: 1;
+}
+
+ul {
+    list-style: none;
+}
+
+* {
+    outline: 0;
+}
+
+.ui-button {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    line-height: normal;
+    margin-right: .1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+}
+
+.ui-button,
+.ui-button:link,
+.ui-button:visited,
+.ui-button:hover,
+.ui-button:active {
+    text-decoration: none;
+}
+
+.keypad-popup,
+.keypad-inline,
+.keypad-key,
+.keypad-special {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.keypad-popup {
+    display: none;
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #888;
+    -moz-border-radius: 0.25em;
+    -webkit-border-radius: 0.25em;
+    border-radius: 0.25em;
+}
+
+.keypad-keyentry {
+    display: none;
+}
+
+.keypad-inline {
+    background-color: transparent;
+    border: medium none;
+    border-radius: 0 0 0 0;
+}
+
+.keypad-row {
+    width: 100%;
+}
+
+.keypad-key,
+.keypad-special {
+    background-color: #ADB5BD;
+    border: medium none;
+    box-shadow: none;
+    color: white;
+    cursor: pointer;
+    height: 30px;
+    margin-bottom: 1px;
+    margin-right: 1px;
+    padding: 0;
+    text-align: center;
+    width: 50px;
+}
+
+.nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.nano>.nano-content {
+    position: absolute;
+    overflow: scroll;
+    overflow-x: hidden;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.nano>.nano-content:focus {
+    outline: thin dotted;
+}
+
+.nano>.nano-content::-webkit-scrollbar {
+    visibility: hidden;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: helvetica, arial, verdana, sans-serif;
+    color: #ffffff;
+    background-image: none;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+a {
+    cursor: pointer;
+}
+
+input {
+    border: 1px solid #D3D3D3;
+    color: #52565c;
+    font-size: 14px;
+}
+
+input:hover {
+    border: 1px solid #94d3e2;
+    color: #52565c;
+}
+
+input:focus,
+input:active {
+    border: 1px solid #3CB1CD;
+    color: #52565c;
+}
+
+input:disabled {
+    background: #e4e4e4;
+    border: 1px solid #CECECE;
+}
+
+#viewport {
+    min-height: 100%;
+    position: relative;
+    width: 100%;
+    min-width: 980px;
+}
+
+#header {
+    position: absolute;
+    min-width: 980px;
+    height: 100px;
+    width: 100%;
+}
+
+#mainContent {
+    padding-bottom: 100px;
+    min-width: 980px;
+    width: 100%;
+    padding-top: 0;
+    z-index: 100;
+    min-height: 510px;
+}
+
+#mainContent.loginMainContent {
+    min-height: 600px;
+}
+
+#footer {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    color: #49A5E0;
+    text-align: center;
+    font-size: 12px;
+    min-height: 50px;
+    z-index: 20;
+    padding-bottom: 20px;
+}
+
+#footer #content {
+    margin-left: 305px;
+    height: 100%;
+    width: auto;
+    text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+    body #footer #content {
+        margin-left: initial;
+        margin-right: initial;
+    }
+}
+
+#footer #content #left,
+#footer #content #right {
+    display: block;
+    float: left;
+    width: 50%;
+}
+
+#footer #content #left .container,
+#footer #content #right .container {
+    border-top: 1px solid #cecece;
+    padding-top: 20px;
+}
+
+#footer #content #left .container {
+    margin-left: 30px;
+}
+
+#footer #content #right .container {
+    margin-right: 30px;
+}
+
+#copyRightContainer {
+    color: #afb0b1;
+    font-size: 14px;
+    vertical-align: bottom;
+}
+
+#leftBannerContainer {
+    position: absolute;
+    background-color: #ffffff;
+    width: 305px;
+    height: 100%;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.formBottomLink {
+    color: #49A5E0;
+    line-height: 24px;
+}
+
+.formBottomLink img {
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+#securityToolTipButton {
+    cursor: pointer;
+    display: table-row;
+    width: auto;
+}
+
+#securityToolTipContainer {
+    display: none;
+    width: 429px;
+    height: 180px;
+    background-color: #ebebeb;
+    color: #535353;
+    line-height: 22px;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.contentBoxContainer {
+    width: 100%;
+    min-height: 430px;
+}
+
+.contentBoxContainer .contentBox {
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.pageContainer {
+    padding-left: 335px;
+    min-width: 600px;
+}
+
+#loginTypesContainer {
+    background-color: #ffffff;
+    padding-bottom: 10px;
+}
+
+.loginTitle {
+    font-family: Helvetica, arial, verdana, sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 34px;
+    color: #08335e;
+    padding-left: 0;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    background-color: #ffffff;
+}
+
+.wait {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wait p {
+    font-size: 24px;
+    color: #000;
+}
+
+.wait img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    background: #013682;
+}
+
+.bold {
+    font-family: Helvetica, arial, verdana, sans-serif;
+    font-weight: 600;
+}
+
+.loginInputContainer {
+    margin-bottom: 15px;
+}
+
+.loginInputContainer.bottom10 {
+    margin-bottom: 10px;
+}
+
+#loginFormBottomPartContainer {
+    background-color: #FFFFFF;
+    height: 100%;
+    padding: 0 30px 30px;
+    padding-left: 0;
+    width: 500px;
+}
+
+.standardInput {
+    height: 42px;
+    box-sizing: border-box;
+    padding-left: 15px !important;
+    width: 443px;
+}
+
+.darkBlueButton:disabled {
+    background-color: #cecece;
+    color: #9e9e9e;
+    text-shadow: 0 1px 0 #e4e4e4;
+    font-weight: bold;
+    cursor: auto;
+}
+
+.darkBlueButton {
+    background-color: #08335E;
+    color: #FFFFFF;
+}
+
+#Form1 {
+    height: 100%;
+}
+
+#footerLinksContainer {
+    float: right;
+    position: relative;
+    line-height: 45px;
+    z-index: 2;
+}
+
+.footerLinks {
+    display: table-cell;
+    padding: 0;
+    text-align: left;
+}
+
+.footerLinks.last {
+    padding-right: 0;
+}
+
+#logoContainer {
+    background-color: #08335E;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    height: 112px;
+    text-align: center;
+    width: 58px;
+    cursor: pointer;
+}
+
+#logoContainer img {
+    margin-top: 48px;
+}
+
+.inputLabel {
+    color: #434343;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.loginInputContainer .infoBlueBox {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.infoBlueBox {
+    width: 44px;
+    height: 42px;
+    background-color: #fafafa;
+    margin-left: 5px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.infoQuestionMark {
+    background-image: url(information_icon.png);
+}
+
+.clearRemembermusno {
+    color: #49A5E0;
+    line-height: 45px;
+    margin-left: -20px;
+    margin-top: 7px;
+    position: absolute;
+    cursor: pointer;
+    background-image: url(icon_x_text.png);
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+}
+
+.musnoOtherInputText {
+    color: #49A5E0;
+    line-height: 45px;
+    margin-left: -92px;
+    margin-top: 7px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.loginErrorContainer {
+    border: 1px solid #FAD5D5;
+    background-color: #FCF0F0;
+    color: #F40C38;
+    padding: 15px;
+    line-height: 17px;
+    margin-bottom: 20px;
+    width: 465px;
+    display: none;
+}
+
+.loginErrorContainer .errorSymbol,
+.loginErrorContainer .errorText {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.loginErrorContainer .errorSymbol {
+    font-size: 40px;
+    padding-right: 10px;
+}
+
+.inputBottomErrorContainer {
+    background-image: url(error_icon_small.png);
+    background-repeat: no-repeat;
+    background-position: left 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-indent: 25px;
+    color: #F40C38;
+    line-height: 20px;
+    display: none;
+}
+
+#tabs {
+    color: #000000;
+}
+
+.tabContentContainer {
+    width: 500px;
+}
+
+.loginPasswordLabel {
+    padding-top: 10px;
+}
+
+.ie8-9Only {
+    display: none;
+}
+
+#updateBrowserInfoContainer {
+    position: relative;
+    background-color: #fdf3ab;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    display: none;
+    height: auto;
+    padding: 0 25px 0 40px;
+    min-height: 40px;
+}
+
+#updateBrowserInfoElement {
+    padding: 10px 0;
+}
+
+#updateBrowserInfoContainer #close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+#updateBrowserInfoContainer a {
+    color: #019cff;
+    text-decoration: underline;
+}
+
+button.ui-button {
+    padding: 15px 40px;
+    text-align: center;
+    margin-right: 0;
+    font-weight: normal;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid black;
+}
+
+#securityToolTipContainer .arrow-up {
+    border-bottom-color: #EBEBEB;
+    position: absolute;
+    margin-top: -17px;
+}
+
+.keyPadContainer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 2px #6C6C6C;
+    left: 925px;
+    margin-top: -65px;
+    padding: 10px;
+    position: absolute;
+    color: #C8CFD5;
+    z-index: 100;
+    display: none;
+    min-width: 183px;
+}
+
+.keypad-key,
+.keypad-special {
+    font-family: helvetica, arial, verdana, sans-serif;
+    background-color: #ADB5BD;
+    width: 60px;
+    height: 40px;
+}
+
+.keypad-delete {
+    background-color: #49A5E0;
+    background-image: url("numpad_delete.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.keypad-shuffle {
+    background-color: #49A5E0;
+    background-image: url("numpad_random.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.nano>.nano-content {
+    padding-right: 30px;
+}
+
+a.blueLink {
+    color: #49A5E0;
+    text-decoration: underline;
+}
+
+.loginInputContainer {
+    position: relative;
+}
+
+.loginInputContainer .keyPadContainer {
+    right: -217px;
+    top: 65px;
+    left: auto;
+}
+
+#mainContent.loginMainContent .loginInputContainer .keyPadContainer {
+    right: 175px;
+    top: 125px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .loginErrorContainer {
+        width: 95% !important;
+    }
+}
+
+@media only screen and (max-width: 1366px) {
+    .loginErrorContainer {
+        width: 465px;
+    }
+}
+
+.touchOverlay {
+    background-color: transparent;
+    opacity: 0.2;
+    z-index: 101;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+#Form1Div {
+    height: 100%;
+}
+
+.ui-login-z5 {
+    display: none;
+}
+
+@media only screen and (max-width: 1366px) {
+    #loginFormBottomPartContainer {
+        width: 500px;
+    }
+
+    .tabContentContainer {
+        width: 500px;
+    }
+}
+
+button {
+    border: none;
+    border-spacing: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0;
+    margin-right: 0;
+}
+
+#viewport {
+    min-width: 320px;
+}
+
+.loginTitleMobile {
+    font-family: Helvetica, arial, verdana, sans-serif;
+    color: #08335e;
+    padding-left: 0;
+    padding-top: 52px;
+    padding-bottom: 33px;
+    background-color: #ffffff;
+    display: none;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: left;
+}
+
+#helpInfoTipButton {
+    cursor: pointer;
+}
+
+#helpInfoToolTipContainer {
+    display: none;
+    height: auto;
+    width: 423px;
+    background-color: #ebebeb;
+    color: #535353;
+    line-height: 22px;
+    padding: 10px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+#helpInfoToolTipContainer .arrow-up {
+    border-bottom-color: #EBEBEB;
+    position: absolute;
+    margin-top: -17px;
+}
+
+.onlyMobile {
+    display: none;
+}
+
+#Form1Div {
+    padding-bottom: 40px;
+}
+
+.login-tooltip-button {
+    height: 24px;
+    display: table-row;
+}
+
+.login-tooltip-button-image,
+.toolTipButtonText {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.nano>.nano-content {
+    padding-right: 0;
+}
+
+.loginFormButtonHolder {
+    width: 443px;
+    margin-top: 28px;
+    text-align: right;
+}
+
+#_ctl0_MusNoText,
+#ParolaText {
+    width: 443px !important;
+}
+
+.loginFormButtonHolder .darkBlueButton {
+    height: 100%;
+}
+
+@media only screen and (max-width: 1024px) {
+    .standardInput {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .loginTitle {
+        display: none;
+    }
+
+    .loginTitleMobile {
+        display: block;
+    }
+
+    .loginInputContainer {
+        margin-bottom: 14px;
+        width: 100%;
+    }
+
+    .loginInputContainer .infoBlueBox {
+        display: none;
+    }
+
+    #mainContent.loginMainContent .loginInputContainer .keyPadContainer {
+        right: 120px !important;
+        top: 110px;
+    }
+
+    #mainContent {
+        min-width: 0;
+    }
+
+    .pageContainer {
+        min-width: 0;
+        padding-left: 227px;
+    }
+
+    .tabContentContainer {
+        width: 100%;
+    }
+
+    .nano {
+        position: relative;
+        height: auto;
+    }
+
+    .nano .nano-content {
+        position: relative;
+        height: auto;
+    }
+
+    .onlyMobile {
+        display: block;
+    }
+
+    #Form1Div {
+        padding-right: 10px;
+    }
+
+    #_ctl0_rememberContainer {
+        padding: 0;
+        right: 6px;
+        top: 0;
+    }
+
+    #loginFormBottomPartContainer {
+        width: 100%;
+    }
+
+    #logoContainer .isbank-header-logo {
+        margin-top: 34px;
+    }
+
+    #helpInfoTipButton {
+        cursor: pointer;
+        display: table-row;
+    }
+
+    #helpInfoTipButton img {
+        margin-top: 3px;
+    }
+
+    #helpInfoToolTipContainer,
+    #securityToolTipContainer {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    #formBottomLinksContainer {
+        padding-right: 10px;
+    }
+
+    #header {
+        min-width: 0;
+    }
+
+    .loginFormButtonHolder {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .formBottomLink {
+        margin-bottom: 14px;
+    }
+
+    .formBottomLink img {
+        vertical-align: middle;
+    }
+
+    #securityToolTipContainer {
+        height: auto;
+    }
+
+    #_ctl0_MusNoText,
+    #ParolaText {
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .loginTitleMobile {
+        padding-left: 10px;
+        border-bottom: 1px solid #cecece;
+        padding-bottom: 22px;
+        padding-top: 22px;
+        margin-bottom: 22px;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 23px;
+    }
+
+    #logoContainer {
+        display: none;
+    }
+
+    #Form1 {
+        padding: 0;
+    }
+
+    #Form1Div {
+        padding-right: 0;
+    }
+
+    #formBottomLinksContainer {
+        padding: 0 10px;
+    }
+
+    #loginFormBottomPartContainer {
+        padding-bottom: 24px;
+        padding-left: 10px;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    #securityToolTipContainer {
+        height: auto;
+    }
+
+    .nano>.nano-content {
+        padding-right: 0;
+    }
+
+    #loginTypesContainer #tabs {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .pageContainer {
+        padding-left: 0;
+    }
+
+    button.ui-button {
+        width: 100%;
+    }
+
+    #securityToolTipContainer {
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    #mainContent {
+        padding-bottom: 140px;
+    }
+
+    #mainContent.loginMainContent {
+        min-height: 0;
+        height: auto;
+    }
+
+    #mainContent.loginMainContent .loginInputContainer .keyPadContainer {
+        display: none !important;
+    }
+
+    .contactUsContainer {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    #leftBannerContainer {
+        width: 217px;
+        background-image: url("banner_for_mobile.jpg");
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #leftBannerContainer {
+        display: none;
+    }
+}
+
+.mobileHeaderContainer {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .mobileHeaderContainer {
+        display: block;
+        position: relative;
+        height: 42px;
+        width: 100%;
+        border-bottom: 1px solid #cecece;
+    }
+
+    .mobileHeader {
+        position: absolute;
+        top: 0;
+        display: block;
+        width: 320px;
+        height: 42px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        background: url("mobile_header.png") no-repeat;
+    }
+}
+
+.onoffswitch {
+    position: relative;
+    width: 80px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.inputHasError,
+.inputHasError:hover,
+.inputHasError:focus,
+.inputHasError:active {
+    border: 1px solid #F40C38 !important;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+}
+
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+.onoffswitch-inner:before,
+.onoffswitch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 24px;
+    padding: 0;
+    line-height: 24px;
+    font-size: 13px;
+    color: white;
+    font-family: Trebuchet, Arial, sans-serif;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.onoffswitch-inner:before {
+    content: "Hatırla";
+    padding-left: 10px;
+    background-color: #F85931;
+    color: #FFFFFF;
+}
+
+.onoffswitch-inner:after {
+    content: "Hatırla";
+    padding-right: 10px;
+    background-color: #999999;
+    text-align: right;
+}
+
+.onoffswitch-switch {
+    display: block;
+    width: 16px;
+    margin: 4px;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 52px;
+    border: 2px solid #FFFFFF;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
+#languageFlagSelect {
+    display: none;
+}
+
+#languageFlagSelect {
+    width: 60px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#languageFlagSelect .isbank-page-language {
+    vertical-align: middle;
+    text-align: right;
+    display: none;
+}
+
+#languageFlagSelect .selected-language {
+    display: block;
+}
+
+#mainContent.loginMainContent {
+    min-height: 0;
+}
+
+#viewport {
+    min-height: 100%;
+    position: relative;
+    width: 100%;
+    min-width: 980px;
+}
+
+#header {
+    position: absolute;
+    min-width: 980px;
+    height: 100px;
+    width: 100%;
+}
+
+#mainContent {
+    padding-bottom: 100px;
+    min-width: 980px;
+    width: 100%;
+    padding-top: 0;
+    z-index: 100;
+    min-height: 510px;
+}
+
+#footer {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    color: #49A5E0;
+    text-align: center;
+    font-size: 12px;
+    min-height: 50px;
+    z-index: 20;
+    padding-bottom: 20px;
+}
+
+#footer #content {
+    margin-left: 305px;
+    height: 100%;
+    width: auto;
+    text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+    body #footer #content {
+        margin-left: initial;
+        margin-right: initial;
+    }
+}
+
+#footer #content #left,
+#footer #content #right {
+    display: block;
+    float: left;
+    width: 50%;
+}
+
+#footer #content #left .container,
+#footer #content #right .container {
+    border-top: 1px solid #cecece;
+    padding-top: 20px;
+}
+
+#footer #content #left .container {
+    margin-left: 30px;
+}
+
+#footer #content #right .container {
+    margin-right: 30px;
+}
+
+#copyRightContainer {
+    color: #afb0b1;
+    font-size: 14px;
+    vertical-align: bottom;
+}
+
+#leftBannerContainer {
+    position: absolute;
+    background-color: #ffffff;
+    width: 305px;
+    height: 100%;
+    background-position: 50% 50%;
+    background-size: cover;
+}
+
+.pageContainer {
+    padding-left: 335px;
+    min-width: 600px;
+}
+
+.loginInputContainer {
+    margin-bottom: 15px;
+}
+
+.wideInput {
+    height: 40px;
+    box-sizing: border-box;
+    padding-left: 15px !important;
+    width: 100%;
+}
+
+.formButtonHolder {
+    margin-top: 28px;
+    width: 100%;
+    text-align: right;
+    min-height: 50px;
+}
+
+.orangeButton {
+    background-color: #F34608;
+    color: #FFFFFF;
+}
+
+.orangeButton:hover {
+    background-color: #F95419;
+}
+
+.orangeButton:active {
+    background-color: #D13F0B;
+}
+
+.orangeButton:disabled,
+.darkBlueButton:disabled {
+    background-color: #cecece;
+    color: #9e9e9e;
+    text-shadow: 0 1px 0 #e4e4e4;
+    font-weight: bold;
+    cursor: auto;
+}
+
+.darkBlueButton {
+    background-color: #08335E;
+    color: #FFFFFF;
+}
+
+#footerLinksContainer {
+    float: right;
+    position: relative;
+    line-height: 45px;
+    z-index: 2;
+}
+
+.footerLinks {
+    display: table-cell;
+    padding: 0;
+    text-align: left;
+}
+
+.footerLinks.last {
+    padding-right: 0;
+}
+
+#logoContainer {
+    background-color: #08335E;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    height: 112px;
+    text-align: center;
+    width: 58px;
+    cursor: pointer;
+}
+
+#logoContainer img {
+    margin-top: 48px;
+}
+
+#pageContent {
+    background-color: #ffffff;
+    width: 578px;
+    margin-bottom: 30px;
+}
+
+.contentTitle {
+    font-family: Helvetica, arial, verdana, sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: #3B3F43;
+    padding-left: 0;
+    padding-top: 30px;
+    width: 80%;
+}
+
+#pageContentDesc {
+    padding: 20px;
+    padding-left: 0;
+    color: #3B3F43;
+    line-height: 18px;
+}
+
+#pageContentDesc #endSession {
+    color: #38C0EC;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+#pageContentDesc #endSession span {
+    border-bottom: 1px solid;
+}
+
+#pageContent #formContainer {
+    background-color: #FFFFFF;
+    padding: 40px 0 30px 0px;
+    color: #767676;
+}
+
+.inputLabel {
+    color: #434343;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.inputDesc {
+    font-family: Helvetica Neue, Helvetica, Arial, verdana, sans-serif;
+    color: #434343;
+    line-height: 17px;
+    padding: 20px 0;
+}
+
+.loginInputContainer .wideInput {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.inputBottomErrorContainer {
+    background-image: url(error_icon_small.png);
+    background-repeat: no-repeat;
+    background-position: left 2px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-indent: 25px;
+    color: #F40C38;
+    line-height: 20px;
+    display: none;
+}
+
+#mobileCodeBottomButtonsContainer {
+    width: 100%;
+    height: 60px;
+}
+
+#timerContainerTd {
+    width: 50px;
+}
+
+#timerCanOtpApproveByDiyalogContainerTd {
+    width: 50px;
+}
+
+#timer {
+    height: 55px;
+    width: 55px;
+    float: right;
+    color: #08335E;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+#timerCanOtpApproveByDiyalog {
+    height: 55px;
+    width: 55px;
+    float: right;
+    color: #08335E;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+button.ui-button {
+    padding: 15px 40px;
+    text-align: center;
+    margin-right: 0;
+    font-weight: normal;
+}
+
+.ui-button.right {
+    float: right;
+}
+
+@media only screen and (max-width: 1024px) {
+    .formButtonHolder {
+        width: 100%;
+    }
+}
+
+.touchOverlay {
+    background-color: transparent;
+    opacity: 0.2;
+    z-index: 101;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+}
+
+@media only screen and (max-width: 1366px) {
+    #pageContent {
+        width: 478px;
+    }
+
+    #mobileCodeBottomButtonsContainer button.ui-button {
+        padding: 15px 5px;
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    #pageContent .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+
+    .loginInputContainer .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 568px) {
+    #pageContent .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+
+    .loginInputContainer .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    #pageContent .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+
+    .loginInputContainer .wideInput {
+        padding: 1px;
+        border-radius: 0;
+        -webkit-appearance: none;
+    }
+}
+
+button {
+    border: none;
+    border-spacing: 0;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+    text-decoration: none;
+    text-indent: 0;
+    margin-right: 0;
+}
+
+#viewport {
+    min-width: 320px;
+}
+
+#resendCode {
+    margin-right: 10px;
+    width: 150px;
+    float: none;
+    padding: 15px;
+}
+
+.formButtonHolder .darkBlueButton {
+    height: 100%;
+}
+
+@media only screen and (max-width: 1024px) {
+    .loginInputContainer {
+        margin-bottom: 14px;
+        width: 100%;
+    }
+
+    #mainContent {
+        min-width: 0;
+    }
+
+    .pageContainer {
+        min-width: 0;
+        padding-left: 227px;
+    }
+
+    #logoContainer .isbank-header-logo {
+        margin-top: 34px;
+    }
+
+    #header {
+        min-width: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #logoContainer {
+        display: none;
+    }
+
+    .pageContainer {
+        padding-left: 0;
+    }
+
+    button.ui-button {
+        width: 100%;
+    }
+
+    #mainContent {
+        padding-bottom: 140px;
+    }
+
+    #resendCode {
+        width: 100%;
+    }
+
+    .contactUsContainer {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    #leftBannerContainer {
+        width: 217px;
+        background-image: url("banner_for_mobile.jpg");
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #leftBannerContainer {
+        display: none;
+    }
+}
+
+.mobileHeaderContainer {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .mobileHeaderContainer {
+        display: block;
+        position: relative;
+        height: 42px;
+        width: 100%;
+        border-bottom: 1px solid #cecece;
+    }
+
+    .mobileHeader {
+        position: absolute;
+        top: 0;
+        display: block;
+        width: 320px;
+        height: 42px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        background: url("mobile_header.png") no-repeat;
+    }
+}
+
+#timerContainer {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    margin: 0 auto;
+    width: 50px;
+    height: 55px;
+}
+
+text#timerText {
+    fill: rgb(0, 0, 0);
+    font-family: Verdana;
+    font-size: 24px;
+    opacity: 1;
+    font-weight: bold;
+    text-anchor: middle;
+    transform: translate(25, 26);
+}
+
+.black_overlay {
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background-color: black;
+    z-index: 1001;
+    filter: alpha(opacity=70);
+    -moz-opacity: 0.7;
+    opacity: .70;
+}
+
+@media only screen and (max-width: 1024px) {
+    #mainContent {
+        padding-bottom: 0;
+    }
+
+    #footer {
+        position: relative;
+        padding-bottom: 35px;
+    }
+
+    #footer #content {
+        margin-left: 227px;
+    }
+
+    #footer #content #left .container {
+        margin-left: 0;
+    }
+
+    #footer #content #left {
+        width: 60%;
+    }
+
+    #footer #content #right {
+        width: 40%;
+    }
+
+    #footer #content #right .container {
+        padding-top: 10px;
+        margin-right: 10px;
+    }
+
+    #copyRightContainer {
+        display: inline-block;
+        vertical-align: middle;
+        padding-top: 4px;
+    }
+
+    .footerLinks {
+        color: #329ce0;
+        font-size: 14px;
+        font-weight: 400;
+        padding-right: 0;
+    }
+
+    .languageContainer {
+        padding-left: 20px;
+    }
+
+    .footerLinks a {
+        vertical-align: middle;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #footer #content {
+        margin-left: 0;
+    }
+
+    #footer {
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    #footer #content #left {
+        position: absolute;
+        top: 40px;
+        width: inherit;
+        padding-bottom: 35px;
+    }
+
+    #footer #content #right {
+        border-top: 1px solid #cecece;
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        width: inherit;
+    }
+
+    #footerLinksContainer {
+        float: none;
+    }
+
+    #footer #content #left .container,
+    #footer #content #right .container {
+        border: none;
+    }
+
+    #copyRightContainer {
+        font-size: 12px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    #leftBannerContainer {
+        width: 217px;
+        background-image: url("banner_for_mobile.jpg");
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #leftBannerContainer {
+        display: none;
+    }
+}
+
+.mobileHeaderContainer {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .mobileHeaderContainer {
+        display: block;
+        position: relative;
+        height: 42px;
+        width: 100%;
+        border-bottom: 1px solid #cecece;
+    }
+
+    .mobileHeader {
+        position: absolute;
+        top: 0;
+        display: block;
+        width: 320px;
+        height: 42px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        background: url("mobile_header.png") no-repeat;
+    }
+}
+
+.loginMobileApproveButtonCell {
+    text-align: right;
+}
+
+#pageContent {
+    width: 443px;
+}
+
+#pageContentDesc {
+    padding-right: 0;
+}
+
+#notifDiv .loginInputContainer {
+    width: 443px;
+    display: table-cell;
+    margin-bottom: 0;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.mobileCodeContainer {
+    width: 500px;
+    height: 55px;
+    display: table;
+}
+
+.mobileApproveButton {
+    width: 150px;
+    margin-top: 10px;
+}
+
+#resendCode {
+    margin-right: 0;
+}
+
+.formButtonHolder {
+    margin-top: 21px;
+}
+
+.loginInputContainer .keyPadContainer {
+    right: auto;
+    top: 125px;
+    left: auto;
+}
+
+@media only screen and (max-width: 1024px) {
+    #mainContent {
+        padding-bottom: 0;
+        min-height: 0;
+    }
+
+    #pageContent {
+        width: 100%;
+        padding-right: 10px;
+        box-sizing: border-box;
+    }
+
+    #pageContent #formContainer {
+        padding: 40;
+    }
+
+    #notifDiv .loginInputContainer {
+        margin-bottom: 14px;
+        width: 100%;
+        padding-right: 14px;
+    }
+
+    .formButtonHolder {
+        margin-top: 18px;
+        margin-right: 63px;
+    }
+
+    .formButtonHolder {
+        margin-top: 28px;
+        padding-right: 2px;
+        min-height: 30px;
+        width: auto;
+    }
+
+    .mobileCodeContainer {
+        width: 100%;
+    }
+
+    #mobileCodeBottomButtonsContainer {
+        height: 120px;
+    }
+
+    #mobileCodeBottomButtonsContainer button.ui-button {
+        width: 150px;
+        padding: 15px 5px;
+    }
+
+    .orangeButton:disabled,
+    .darkBlueButton:disabled {
+        letter-spacing: -0.5px;
+    }
+
+    #mobileCodeBottomButtonsContainer .loginMobileApproveButtonCell {
+        vertical-align: middle;
+    }
+
+    #timer {
+        width: 100%;
+    }
+
+    #timerCanOtpApproveByDiyalog {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .pageContainer {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    #pageContent {
+        padding-right: 0;
+    }
+
+    #pageContent #formContainer {
+        padding: 0;
+    }
+
+    .keyPadContainer {
+        display: none !important;
+    }
+
+    #mobileCodeBottomButtonsContainer button.ui-button {
+        width: 100%;
+    }
+
+    .formButtonHolder {
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    #mainContent {
+        padding-bottom: 0;
+    }
+
+    #footer {
+        position: relative;
+        padding-bottom: 35px;
+    }
+
+    #footer #content {
+        margin-left: 227px;
+    }
+
+    #footer #content #left .container {
+        margin-left: 0;
+    }
+
+    #footer #content #left {
+        width: 60%;
+    }
+
+    #footer #content #right {
+        width: 40%;
+    }
+
+    #footer #content #right .container {
+        padding-top: 10px;
+        margin-right: 10px;
+    }
+
+    #copyRightContainer {
+        display: inline-block;
+        vertical-align: middle;
+        padding-top: 4px;
+    }
+
+    .footerLinks {
+        color: #329ce0;
+        font-size: 14px;
+        font-weight: 400;
+        padding-right: 0;
+    }
+
+    .languageContainer {
+        padding-left: 20px;
+    }
+
+    .footerLinks a {
+        vertical-align: middle;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #footer #content {
+        margin-left: 0;
+    }
+
+    #footer {
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    #footer #content #left {
+        position: absolute;
+        top: 40px;
+        width: inherit;
+        padding-bottom: 35px;
+    }
+
+    #footer #content #right {
+        border-top: 1px solid #cecece;
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        width: inherit;
+    }
+
+    #footerLinksContainer {
+        float: none;
+    }
+
+    #footer #content #left .container,
+    #footer #content #right .container {
+        border: none;
+    }
+
+    #copyRightContainer {
+        font-size: 12px;
+    }
+}

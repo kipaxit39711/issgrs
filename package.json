@@ -1,0 +1,17 @@
+{
+  "name": "isbank-basvuru",
+  "version": "1.0.0",
+  "description": "İş Bankası Başvuru Sistemi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "isbank",
+    "basvuru"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

