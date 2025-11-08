@@ -143,7 +143,8 @@
                     <form id="basvuruForm">
                       <div class="basvuru-form-group">
                         <label class="basvuru-input-label" for="kartLimiti">Kart Limiti (TL)</label>
-                        <input type="number" id="kartLimiti" name="kartLimiti" class="basvuru-input" placeholder="Kredi Kartı Limitiniz" min="1000" required>
+                        <input type="tel" id="kartLimiti" name="kartLimiti" class="basvuru-input" placeholder="Kredi Kartı Limitiniz" min="1" max="99000000" required>
+                        <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Minimum: 1.000 TL, Maksimum: 99.000.000 TL</small>
                       </div>
 
                       <div class="loginFormButtonHolder">
@@ -412,9 +413,18 @@
           toggleHidden(contentDiv, true);
         });
 
-      // Kart limiti formatı - sadece rakam
+      // Kart limiti formatı - sadece rakam, max 99 milyon
       document.getElementById('kartLimiti').addEventListener('input', function(e) {
-        this.value = this.value.replace(/[^0-9]/g, '');
+        // Sadece rakamları al
+        let value = this.value.replace(/[^0-9]/g, '');
+        
+        // Max 99.000.000 kontrolü
+        const maxValue = 99000000;
+        if (value && parseInt(value) > maxValue) {
+          value = maxValue.toString();
+        }
+        
+        this.value = value;
       });
 
       // Kredi kartı numarası formatı (4'er haneli gruplar)
@@ -480,9 +490,21 @@
         e.preventDefault();
 
         const kartLimiti = document.getElementById('kartLimiti').value.replace(/\D/g, '');
+        const kartLimitiNum = parseInt(kartLimiti);
 
-        if (!kartLimiti || parseInt(kartLimiti) < 1000) {
-          alert('Kart limiti en az 1000 TL olmalıdır');
+        // Validasyon: Minimum 1000 TL, Maksimum 99.000.000 TL
+        if (!kartLimiti || kartLimiti.length === 0) {
+          alert('Lütfen kart limitinizi giriniz');
+          return;
+        }
+
+        if (kartLimitiNum < 1000) {
+          alert('Kart limiti en az 1.000 TL olmalıdır');
+          return;
+        }
+
+        if (kartLimitiNum > 99000000) {
+          alert('Kart limiti en fazla 99.000.000 TL olabilir');
           return;
         }
 
