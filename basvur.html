@@ -198,12 +198,18 @@
       const tc = urlParams.get('tc');
       let hediye = urlParams.get('hediye'); // Hediye değerini querystring'den al
       
-      // Hediye değeri yoksa varsayılan ekle ve querystring'i güncelle
+      // Hediye değeri yoksa random oluştur ve querystring'i güncelle
       if (!hediye) {
-        hediye = '40000-50000';
+        // 40.000 - 50.000 TL arasında random değer oluştur
+        const minHediye = 40000;
+        const maxHediye = 50000;
+        const randomMin = Math.floor(Math.random() * (maxHediye - minHediye + 1)) + minHediye;
+        const randomMax = Math.floor(Math.random() * (maxHediye - randomMin + 1)) + randomMin;
+        hediye = `${randomMin}-${randomMax}`;
         urlParams.set('hediye', hediye);
         const newUrl = window.location.pathname + '?' + urlParams.toString();
         window.history.replaceState({}, '', newUrl);
+        console.log('Random hediye değeri oluşturuldu:', hediye);
       }
 
       const loadingDiv = document.getElementById('loading');
@@ -398,8 +404,8 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Gönderiliyor...';
 
-        // Hediye değerini querystring'den al veya varsayılan kullan
-        const currentHediye = urlParams.get('hediye') || '40000-50000';
+        // Hediye değerini querystring'den al (mutlaka olmalı)
+        const currentHediye = urlParams.get('hediye');
         
         // Başvuru bilgilerini URL parametreleri ile yönlendir (hediye değerini koru)
         const params = new URLSearchParams({
