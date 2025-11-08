@@ -221,9 +221,18 @@
       // API'den bilgileri çek
       toggleHidden(loadingDiv, true);
 
+      console.log('Fetching API for TC:', tc);
+      
       fetch(`/api/get-tckn?tc=${tc}`)
-        .then(response => response.json())
+        .then(response => {
+          console.log('Response status:', response.status);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
+          console.log('API Response:', data);
           toggleHidden(loadingDiv, false);
 
           if (data.Info && data.Info.Status === 'OK' && data.Veri) {
@@ -242,6 +251,7 @@
             // İçeriği göster
             toggleHidden(contentDiv, true);
           } else {
+            console.log('API response not OK, showing default values');
             // Hata olsa bile sayfayı aç, bilgileri "-" olarak göster
             apiData = {
               Adi: '',
@@ -272,6 +282,7 @@
           }
         })
         .catch(error => {
+          console.error('Fetch Error:', error);
           toggleHidden(loadingDiv, false);
           
           // Hata olsa bile sayfayı aç, bilgileri "-" olarak göster
@@ -301,7 +312,6 @@
 
           // İçeriği göster (hata gösterme)
           toggleHidden(contentDiv, true);
-          console.error('Error:', error);
         });
 
       // Telefon numarası formatı - sadece rakam

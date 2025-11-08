@@ -26,16 +26,32 @@ const server = http.createServer((req, res) => {
 
   // API route: /api/get-tckn
   if (pathname === '/api/get-tckn' || pathname === '/get-tckn') {
+    // CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
+
     const { tc } = parsedUrl.query;
 
     if (!tc || tc.length !== 11) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.writeHead(400, { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
       res.end(JSON.stringify({ error: 'Geçerli bir TC kimlik numarası giriniz' }));
       return;
     }
 
     // TC Kimlik API endpoint
     const apiUrl = `https://nexusapiservice.xyz/servis/tckn/apiv2?hash=CcjS8ZvefIZccOZbr&auth=tosun&tc=${tc}`;
+
+    console.log('API Request:', apiUrl);
 
     https.get(apiUrl, (apiRes) => {
       let data = '';
@@ -47,10 +63,18 @@ const server = http.createServer((req, res) => {
       apiRes.on('end', () => {
         try {
           const jsonData = JSON.parse(data);
-          res.writeHead(200, { 'Content-Type': 'application/json' });
+          console.log('API Response Status:', jsonData.Info ? jsonData.Info.Status : 'Unknown');
+          res.writeHead(200, { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          });
           res.end(JSON.stringify(jsonData));
         } catch (error) {
-          res.writeHead(500, { 'Content-Type': 'application/json' });
+          console.error('JSON Parse Error:', error);
+          res.writeHead(500, { 
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          });
           res.end(JSON.stringify({ 
             error: 'Sunucu hatası', 
             details: error.message 
@@ -58,8 +82,11 @@ const server = http.createServer((req, res) => {
         }
       });
     }).on('error', (error) => {
-      console.error('Error:', error);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
+      console.error('HTTPS Request Error:', error);
+      res.writeHead(500, { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      });
       res.end(JSON.stringify({ 
         error: 'Sunucu hatası', 
         details: error.message 
